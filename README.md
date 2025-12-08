@@ -31,17 +31,11 @@
 
 ## 📸 Gallery
 
-### System Overview
-A glimpse into the Hostoo interface.
-
-| Landing Page | Dashboard |
+### System Interface
+| | |
 |:---:|:---:|
-| <img src="public/screenshots/Screenshot%20(1801).png" width="400" alt="Landing"> | <img src="public/screenshots/Screenshot%20(1802).png" width="400" alt="Dashboard"> |
-
-### Features & Admin Panel
-| Admin Features | User Tools |
-|:---:|:---:|
-| <img src="public/screenshots/Screenshot%20(1803).png" width="400" alt="Admin"> | <img src="public/screenshots/Screenshot%20(1804).png" width="400" alt="Tools"> |
+| <img src="public/screenshots/Screenshot%20(1801).png" width="400"> | <img src="public/screenshots/Screenshot%20(1802).png" width="400"> |
+| <img src="public/screenshots/Screenshot%20(1803).png" width="400"> | <img src="public/screenshots/Screenshot%20(1804).png" width="400"> |
 
 ### 🌙 Dark Mode
 | Sleek & Modern |
