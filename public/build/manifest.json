@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-Du67QgjT.css",
+    "file": "assets/app-FNGdnsm5.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -100,16 +100,22 @@
     "isEntry": true
   },
   "resources/js/back-to-top.js": {
-    "file": "assets/back-to-top-CO7CVbGR.js",
+    "file": "assets/back-to-top-XRuH5WOi.js",
     "name": "back-to-top",
     "src": "resources/js/back-to-top.js",
-    "isEntry": true
+    "isEntry": true,
+    "assets": [
+      "assets/cursor_plane-Dn3uxn96.png"
+    ]
   },
   "resources/js/cursor-clouds.js": {
-    "file": "assets/cursor-clouds-au_jdhq5.js",
+    "file": "assets/cursor-clouds-BLwOOXMS.js",
     "name": "cursor-clouds",
     "src": "resources/js/cursor-clouds.js",
-    "isEntry": true
+    "isEntry": true,
+    "assets": [
+      "assets/cursor_plane-Dn3uxn96.png"
+    ]
   },
   "resources/js/images.js": {
     "file": "assets/images-l0sNRNKZ.js",

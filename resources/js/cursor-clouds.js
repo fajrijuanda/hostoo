@@ -4,13 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Create Plane Element
     const plane = document.createElement('img');
-    // Import image directly
+    // Import image directly via Vite for correct asset pathing
     const planeImgUrl = new URL('../images/cursor_plane.png', import.meta.url).href;
     plane.src = planeImgUrl;
     plane.id = 'cursor-plane';
     Object.assign(plane.style, {
         position: 'fixed',
-        width: '50px', // Slightly smaller for better usability
+        width: '50px',
         height: 'auto',
         zIndex: '10000',
         pointerEvents: 'none',

@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!backToTopBtn) {
         backToTopBtn = document.createElement('div');
         backToTopBtn.id = 'back-to-top';
-        // Use Image as requested
+        // Use Image as requested, imported via Vite
         const planeImgUrl = new URL('../images/cursor_plane.png', import.meta.url).href;
         backToTopBtn.innerHTML = `<img src="${planeImgUrl}" alt="Back to Top">`;
         document.body.appendChild(backToTopBtn);
