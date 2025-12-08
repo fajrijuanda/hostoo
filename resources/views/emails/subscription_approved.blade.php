@@ -104,13 +104,13 @@
     <div class="container">
         <div class="header">
             <!-- Light Mode Logo -->
-            <img src="{{ asset('images/logo.png') }}" alt="Hostoo" class="logo-light">
+            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo" class="logo-light">
             <!-- Dark Mode Logo -->
-            <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo" class="logo-dark">
+            <img src="{{ Vite::asset('resources/images/dark-logo.png') }}" alt="Hostoo" class="logo-dark">
         </div>
         
         <div class="content">
-            <img src="{{ asset('images/hero-illustration-transparent.png') }}" alt="Success" class="illustration">
+            <img src="{{ Vite::asset('resources/images/hero-illustration-transparent.png') }}" alt="Success" class="illustration">
             
             <h1>You're All Set! &#127881;</h1>
             

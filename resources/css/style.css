@@ -1,0 +1,67 @@
+/* Main Stylesheet Import Hub */
+
+/* Base & Typography */
+@import url('base.css');
+
+/* Layout (Header, Footer, Sidebar, Grid) */
+@import url('layout.css');
+
+/* Components */
+@import url('components/buttons.css');
+@import url('components/cards.css');
+@import url('components/forms.css');
+@import url('components/animations.css');
+@import url('components/ui-feedback.css');
+
+/* Page Specifics */
+@import url('pages/landing.css');
+
+/* Theme (Dark Mode) - Must load last to override */
+@import url('theme.css');
+
+/* Sticky Navbar Logic */
+.navbar-custom {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.navbar-custom.scrolled {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 0.8rem 1rem;
+    /* Slightly shrink and push content in */
+    border-radius: 0 0 20px 20px;
+}
+
+body.dark-mode .navbar-custom.scrolled {
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Domain Setup Alert - Base Styles */
+.domain-setup-alert {
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+    border-radius: 5px;
+}
+
+.domain-setup-alert .alert-title {
+    color: #0d47a1;
+    margin-bottom: 0.5rem;
+}
+
+.domain-setup-alert .btn {
+    transition: 0.3s;
+}

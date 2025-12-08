@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-FNGdnsm5.css",
+    "file": "assets/app-Cww8ovZj.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -8,10 +8,125 @@
       "app.css"
     ]
   },
+  "resources/css/style.css": {
+    "file": "assets/style-DoqIatEO.css",
+    "src": "resources/css/style.css",
+    "isEntry": true,
+    "name": "style",
+    "names": [
+      "style.css"
+    ]
+  },
+  "resources/images/Hostoo.png": {
+    "file": "assets/Hostoo-B53SzA14.png",
+    "src": "resources/images/Hostoo.png"
+  },
+  "resources/images/avatar-mike.png": {
+    "file": "assets/avatar-mike-CzMViHD7.png",
+    "src": "resources/images/avatar-mike.png"
+  },
+  "resources/images/coming-soon.png": {
+    "file": "assets/coming-soon-BKdum9zV.png",
+    "src": "resources/images/coming-soon.png"
+  },
+  "resources/images/cursor_plane.png": {
+    "file": "assets/cursor_plane-Dn3uxn96.png",
+    "src": "resources/images/cursor_plane.png"
+  },
+  "resources/images/dark-logo-2.png": {
+    "file": "assets/dark-logo-2-C42PFWXX.png",
+    "src": "resources/images/dark-logo-2.png"
+  },
+  "resources/images/dark-logo-collapsed-2.png": {
+    "file": "assets/dark-logo-collapsed-2-BrMZ_etN.png",
+    "src": "resources/images/dark-logo-collapsed-2.png"
+  },
+  "resources/images/dark-logo-collapsed.png": {
+    "file": "assets/dark-logo-collapsed-BjNpL3tS.png",
+    "src": "resources/images/dark-logo-collapsed.png"
+  },
+  "resources/images/dark-logo.png": {
+    "file": "assets/dark-logo-B4rflwF5.png",
+    "src": "resources/images/dark-logo.png"
+  },
+  "resources/images/hero-illustration-transparent.png": {
+    "file": "assets/hero-illustration-transparent-yAVDvNVY.png",
+    "src": "resources/images/hero-illustration-transparent.png"
+  },
+  "resources/images/hero-illustration.png": {
+    "file": "assets/hero-illustration-BXehEnFU.png",
+    "src": "resources/images/hero-illustration.png"
+  },
+  "resources/images/hostoo-success-bg.png": {
+    "file": "assets/hostoo-success-bg-CXoMwBTl.png",
+    "src": "resources/images/hostoo-success-bg.png"
+  },
+  "resources/images/logo-2.png": {
+    "file": "assets/logo-2-CwTZS-LR.png",
+    "src": "resources/images/logo-2.png"
+  },
+  "resources/images/logo-collapsed-2.png": {
+    "file": "assets/logo-collapsed-2-CP5_XcF4.png",
+    "src": "resources/images/logo-collapsed-2.png"
+  },
+  "resources/images/logo-collapsed.png": {
+    "file": "assets/logo-collapsed-DvygohpU.png",
+    "src": "resources/images/logo-collapsed.png"
+  },
+  "resources/images/logo.png": {
+    "file": "assets/logo-BfyvZyU9.png",
+    "src": "resources/images/logo.png"
+  },
+  "resources/images/plan-1.png": {
+    "file": "assets/plan-1-BYqRtyiQ.png",
+    "src": "resources/images/plan-1.png"
+  },
+  "resources/images/plan-2.png": {
+    "file": "assets/plan-2-j3MEwZtx.png",
+    "src": "resources/images/plan-2.png"
+  },
+  "resources/images/subscribe section.png": {
+    "file": "assets/subscribe section-DsWhkdSa.png",
+    "src": "resources/images/subscribe section.png"
+  },
+  "resources/images/website-success-bg.png": {
+    "file": "assets/website-success-bg-B9C5FsjJ.png",
+    "src": "resources/images/website-success-bg.png"
+  },
   "resources/js/app.js": {
     "file": "assets/app-CAiCLEjY.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/back-to-top.js": {
+    "file": "assets/back-to-top-CO7CVbGR.js",
+    "name": "back-to-top",
+    "src": "resources/js/back-to-top.js",
+    "isEntry": true
+  },
+  "resources/js/cursor-clouds.js": {
+    "file": "assets/cursor-clouds-au_jdhq5.js",
+    "name": "cursor-clouds",
+    "src": "resources/js/cursor-clouds.js",
+    "isEntry": true
+  },
+  "resources/js/images.js": {
+    "file": "assets/images-l0sNRNKZ.js",
+    "name": "images",
+    "src": "resources/js/images.js",
+    "isEntry": true
+  },
+  "resources/js/navbar.js": {
+    "file": "assets/navbar-B2rnpA7E.js",
+    "name": "navbar",
+    "src": "resources/js/navbar.js",
+    "isEntry": true
+  },
+  "resources/js/sidebar.js": {
+    "file": "assets/sidebar-CcS3ZEeC.js",
+    "name": "sidebar",
+    "src": "resources/js/sidebar.js",
     "isEntry": true
   }
 }

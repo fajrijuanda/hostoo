@@ -1,8 +1,8 @@
 <header id="navbar" class="navbar-custom">
     @if(!Auth::check() || (!Auth::user()->hasActiveSubscription() && !Auth::user()->isAdmin()) || request()->is('/'))
     <div class="logo">
-        <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 48px;">
-        <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="height: 48px; display: none;">
+        <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 48px;">
+        <img src="{{ Vite::asset('resources/images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="height: 48px; display: none;">
     </div>
     @endif
     <div class="header-content" style="flex: 1; display: flex; justify-content: space-between; align-items: center;">

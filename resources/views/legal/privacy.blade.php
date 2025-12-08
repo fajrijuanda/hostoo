@@ -115,7 +115,7 @@
 
     <header class="header">
         <a href="{{ route('welcome') }}" class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo">
+            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo Logo">
         </a>
     </header>
 

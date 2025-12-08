@@ -17,7 +17,7 @@
         </div>
         <div class="hero-image">
             <!-- Placeholder for Hero Image - utilizing a nice illustration style if available, otherwise text/abstract -->
-            <img src="{{ asset('images/hero-illustration-transparent.png') }}" alt="Hosting Illustration" style="max-width: 100%; border-radius: 20px;">
+            <img src="{{ Vite::asset('resources/images/hero-illustration-transparent.png') }}" alt="Hosting Illustration" style="max-width: 100%; border-radius: 20px;">
         </div>
         
         <!-- Animated Clouds -->
@@ -419,7 +419,7 @@
         width: 100%;
         height: 150px;
         border-radius: 20px;
-        background: url('{{ asset("images/hostoo-success-bg.png") }}');
+        background: url('{{ Vite::asset("resources/images/hostoo-success-bg.png") }}');
         background-size: cover;
         background-position: center;
         margin-bottom: 1rem;
@@ -703,7 +703,7 @@
             </div>
             
             <div class="float-review-card">
-                <img src="{{ asset('images/avatar-mike.png') }}" class="float-avatar" alt="Avatar">
+                <img src="{{ Vite::asset('resources/images/avatar-mike.png') }}" class="float-avatar" alt="Avatar">
                 <div class="float-content">
                     <h5>Deployment</h5>
                     <p>Server Config</p>
@@ -724,7 +724,7 @@
         </div>
         <div class="testimonial-right">
             <div class="testimonial-card-main">
-                <img src="{{ asset('images/avatar-mike.png') }}" class="testimonial-avatar" alt="Mike Taylor">
+                <img src="{{ Vite::asset('resources/images/avatar-mike.png') }}" class="testimonial-avatar" alt="Mike Taylor">
                 <p class="testimonial-text">
                     "On the Windows talking painted pasture yet its express parties use. Sure last upon he same as knew next. Of believed or diverted no."
                 </p>

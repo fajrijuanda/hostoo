@@ -162,14 +162,14 @@
 
     <header class="header">
         <a href="{{ route('welcome') }}" class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo">
+            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo Logo">
         </a>
     </header>
 
     <div class="container">
         <div class="card">
             <!-- Using existing image as fallback since generation failed -->
-            <img src="{{ asset('images/avatar-mike.png') }}" alt="We are sad to see you go" class="illustration">
+            <img src="{{ Vite::asset('resources/images/avatar-mike.png') }}" alt="We are sad to see you go" class="illustration">
             
             <h1>We're sorry to see you go</h1>
             <p>Please let us know why you are unsubscribing. This helps us improve.</p>

@@ -1,0 +1,379 @@
+/* Default Card Style (Light Mode) */
+.white-card {
+    background-color: #ffffff;
+}
+
+/* Default Body (Light Mode) Wave */
+/* Default Body (Light Mode) Wave */
+body {
+    /* Lighter Amber/Yellow colored wave for light mode (#FFE082) - Opacity 0.15 */
+    background-image: url("data:image/svg+xml,%3Csvg width='1440' height='900' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-36.17 653.07C32.12 402.04 456.98 546.61 748.19 653.07c291.21 106.46 446.06 144.53 717.09 46.46' stroke='%23FFE082' stroke-width='300' fill='none' fill-rule='evenodd' opacity='.15'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: 120% auto;
+    background-attachment: fixed;
+}
+
+/* Dark Mode Variables & Background */
+body.dark-mode {
+    --primary: #DF6951;
+    --secondary: #E0E0E0;
+    --accent: #FFC107;
+    --text-color: #f1f1f1;
+    --background: #121212;
+    --white: #121212;
+    --shadow: none;
+
+    background-color: #121212 !important;
+    /* Salmon colored wave for dark mode (#DF6951) - Opacity 0.15 */
+    background-image: url("data:image/svg+xml,%3Csvg width='1440' height='900' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-36.17 653.07C32.12 402.04 456.98 546.61 748.19 653.07c291.21 106.46 446.06 144.53 717.09 46.46' stroke='%23DF6951' stroke-width='300' fill='none' fill-rule='evenodd' opacity='.15'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: 120% auto;
+    background-attachment: fixed;
+    color: var(--text-color);
+}
+
+/* Global Header/Text Overrides for Dark Mode */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span:not(.badge),
+body.dark-mode strong,
+body.dark-mode label,
+body.dark-mode .tagline,
+body.dark-mode .hero-text {
+    color: inherit;
+    /* Reset to allow cascade */
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode .hero-title {
+    color: var(--secondary) !important;
+}
+
+body.dark-mode p,
+body.dark-mode span:not(.badge),
+body.dark-mode label,
+body.dark-mode .hero-text {
+    color: #b0b0b0 !important;
+}
+
+/* Specific overrides MUST come after generic span rules */
+body.dark-mode .tagline,
+body.dark-mode .hero-title span {
+    color: var(--primary) !important;
+}
+
+/* Backgrounds for Header/Sidebar */
+body.dark-mode .sidebar {
+    background-color: #121212 !important;
+    border: none !important;
+    box-shadow: none;
+}
+
+body.dark-mode header,
+body.dark-mode .main-with-sidebar {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none;
+}
+
+/* Logo Switching */
+body.dark-mode .logo-light,
+body.dark-mode .hero-img-dark {
+    display: none !important;
+}
+
+body.dark-mode .logo-dark {
+    display: inline-block !important;
+    /* Fix alignment */
+}
+
+body.dark-mode .hero-img-light {
+    display: block !important;
+}
+
+/* Buttons */
+body.dark-mode .btn,
+body.dark-mode .btn-submit,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-auth {
+    background-color: var(--primary) !important;
+    color: white !important;
+    border: none;
+}
+
+body.dark-mode .btn:hover,
+body.dark-mode .btn-submit:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 10px rgba(223, 105, 81, 0.4);
+}
+
+/* Navbar & Sidebar Links */
+/* Navbar & Sidebar Links */
+body.dark-mode .nav-links a,
+body.dark-mode .user-menu button {
+    color: var(--secondary) !important;
+}
+
+/* Sidebar Menu - Whiter Text */
+body.dark-mode .sidebar-menu a {
+    color: #ffffff !important;
+}
+
+body.dark-mode .sidebar-menu a.active {
+    color: white !important;
+    background: var(--primary) !important;
+}
+
+/* Sidebar Logout Button - Dark Mode */
+body.dark-mode .sidebar-logout-btn {
+    background-color: transparent !important;
+    /* Or #121212 to match sidebar */
+    color: var(--primary) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+body.dark-mode .sidebar-logout-btn:hover {
+    background-color: rgba(223, 105, 81, 0.1) !important;
+    /* Subtle orange tint on hover */
+    color: var(--primary) !important;
+}
+
+body.dark-mode .sidebar-header {
+    border-bottom-color: #333;
+}
+
+/* Search Bar */
+body.dark-mode .search-wrapper input {
+    background: #2C2C2C;
+    color: white;
+    border-color: #444;
+}
+
+body.dark-mode .btn-google {
+    background: #2C2C2C;
+    color: white;
+    border: 1px solid #444 !important;
+}
+
+/* Cards (Plan, Service, White Card, Generic Card) */
+body.dark-mode .service-card,
+body.dark-mode .plan-card,
+body.dark-mode .white-card,
+body.dark-mode .card,
+body.dark-mode .alert-box {
+    background-color: #1E1E1E !important;
+    border: 1px solid #333 !important;
+    box-shadow: none !important;
+}
+
+/* Card Text Colors */
+body.dark-mode .service-card h4,
+body.dark-mode .plan-price span:first-child,
+body.dark-mode .card h2,
+body.dark-mode .card h3,
+body.dark-mode .card h4,
+body.dark-mode .white-card h2,
+body.dark-mode .white-card h3,
+body.dark-mode .white-card h4,
+body.dark-mode .alert-box h4,
+body.dark-mode .alert-box .alert-title {
+    color: var(--primary) !important;
+}
+
+body.dark-mode .service-card p,
+body.dark-mode .plan-content p,
+body.dark-mode .plan-content div,
+body.dark-mode .card p,
+body.dark-mode .card span:not(.badge),
+body.dark-mode .card label,
+body.dark-mode .white-card p,
+body.dark-mode .white-card span:not(.badge),
+body.dark-mode .white-card label,
+body.dark-mode .alert-box p {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .service-icon i,
+body.dark-mode .plan-card .plan-cost {
+    color: var(--primary) !important;
+}
+
+/* Dropdown */
+body.dark-mode #userDropdown {
+    background: #1E1E1E !important;
+    border: 1px solid #333 !important;
+}
+
+body.dark-mode #userDropdown a {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode #userDropdown span {
+    color: var(--primary) !important;
+}
+
+/* Loader */
+body.dark-mode #app-loader {
+    background: rgba(18, 18, 18, 0.9);
+}
+
+body.dark-mode .loader-cloud {
+    background: #fff;
+}
+
+/* Profile Stat Box (Inner) */
+body.dark-mode .white-card div[style*="background: #f8f9fa"],
+body.dark-mode .card div[style*="background: #f8f9fa"] {
+    background: #2C2C2C !important;
+    border: 1px solid #333 !important;
+}
+
+/* Badge Logic */
+body.dark-mode .badge {
+    color: #fff !important;
+}
+
+body.dark-mode .badge[style*="background: #e8f5e9"] {
+    /* Active Green */
+    background: #1b5e20 !important;
+    color: #a5d6a7 !important;
+}
+
+body.dark-mode .badge[style*="background: #e9ecef"] {
+    /* Inactive Gray */
+    background: #424242 !important;
+    color: #bdbdbd !important;
+}
+
+body.dark-mode .badge[style*="background: #fff3e0"] {
+    /* Pending Orange */
+    background: #e65100 !important;
+    color: #ffcc80 !important;
+}
+
+/* Forms (Input, Select, Textarea) */
+body.dark-mode input.form-control,
+body.dark-mode select.form-control,
+body.dark-mode textarea.form-control {
+    background-color: #2C2C2C !important;
+    border-color: #444 !important;
+    color: #f1f1f1 !important;
+}
+
+body.dark-mode input.form-control:focus,
+body.dark-mode select.form-control:focus,
+body.dark-mode textarea.form-control:focus {
+    background-color: #333 !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+}
+
+/* Disabled Button */
+.btn-disabled-feature,
+body.dark-mode .btn-disabled-feature {
+    background-color: #cccccc !important;
+    border-color: #cccccc !important;
+    color: #666666 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    opacity: 0.7 !important;
+    box-shadow: none !important;
+}
+
+/* Domain Alert */
+body.dark-mode .domain-setup-alert {
+    background: #1E1E1E !important;
+    border: 1px solid #333;
+    border-left: 5px solid #2196f3;
+}
+
+body.dark-mode .domain-setup-alert .alert-title {
+    color: #64b5f6 !important;
+}
+
+body.dark-mode .domain-setup-alert p {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .domain-setup-alert .btn[style*="background: white"] {
+    background: transparent !important;
+    color: #2196f3 !important;
+    border-color: #2196f3 !important;
+}
+
+/* Custom Plane Alert Dark Mode Overrides */
+body.dark-mode .plane-alert-box {
+    background: #1E1E1E !important;
+    border: 1px solid #333 !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.dark-mode .plane-alert-title {
+    color: var(--secondary) !important;
+}
+
+body.dark-mode .plane-alert-text {
+    color: #e0e0e0 !important;
+}
+
+body.dark-mode .plane-alert-btn.btn-cancel {
+    background: #444 !important;
+    color: #fff !important;
+    border: 1px solid #555 !important;
+}
+
+body.dark-mode .plane-alert-btn.btn-cancel:hover {
+    background: #555 !important;
+}
+
+/* Modals (Plans, etc.) - Dark Mode */
+body.dark-mode .modal-content {
+    background: #1E1E1E !important;
+    border: 1px solid #333;
+    color: #e0e0e0;
+}
+
+body.dark-mode .modal-content h3 {
+    color: var(--secondary) !important;
+}
+
+body.dark-mode .modal-content .close-btn,
+body.dark-mode button[onclick*="closeModal"] {
+    color: #e0e0e0 !important;
+}
+
+/* Modal Form Inputs */
+body.dark-mode .modal-content input.form-control,
+body.dark-mode .modal-content textarea.form-control,
+body.dark-mode .modal-content select.form-control {
+    background: #2C2C2C !important;
+    border-color: #444 !important;
+    color: white !important;
+}
+
+/* Modal Inner Sections (Image Upload, Discount Settings) */
+body.dark-mode .modal-content div[style*="background: #f8f9fa"],
+body.dark-mode .modal-content div[style*="background: white"] {
+    background: #2C2C2C !important;
+    border-color: #444 !important;
+}
+
+/* Modal Cancel Button */
+body.dark-mode .modal-content button.btn {
+    background: #444 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .modal-content button.btn:hover {
+    background: #555 !important;
+}

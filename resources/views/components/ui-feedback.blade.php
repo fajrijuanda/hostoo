@@ -1,7 +1,7 @@
 <!-- Page Loader -->
 <div id="app-loader">
     <div class="loader-plane-container">
-        <img src="{{ asset('images/cursor_plane.png') }}" alt="Loading..." class="loader-plane">
+        <img src="{{ Vite::asset('resources/images/cursor_plane.png') }}" alt="Loading..." class="loader-plane">
         <div class="loader-clouds">
             <!-- Dynamic CSS Clouds -->
             <div class="loader-cloud" style="top: 10px; left: 10px; animation-delay: 0s; transform: scale(0.8);"></div>

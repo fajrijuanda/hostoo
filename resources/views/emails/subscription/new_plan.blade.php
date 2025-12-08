@@ -133,9 +133,9 @@
     <div class="container">
         <div class="header">
             <!-- Light Mode Logo -->
-            <img src="{{ asset('images/logo.png') }}" alt="Hostoo" class="logo-light">
+            <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo" class="logo-light">
             <!-- Dark Mode Logo -->
-            <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo" class="logo-dark">
+            <img src="{{ Vite::asset('resources/images/dark-logo.png') }}" alt="Hostoo" class="logo-dark">
         </div>
         
         <div class="content">

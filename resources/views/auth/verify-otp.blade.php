@@ -38,8 +38,8 @@
         
         <!-- Logo -->
         <div style="margin-bottom: 2rem;">
-             <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 40px; margin-bottom: 10px;">
-             <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="height: 40px; margin-bottom: 10px; display: none;">
+             <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 40px; margin-bottom: 10px;">
+             <img src="{{ Vite::asset('resources/images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="height: 40px; margin-bottom: 10px; display: none;">
              <h3 style="font-weight: 700; color: #333; margin-top: 10px;">Verify Your Email</h3>
              <p style="color: #666; font-size: 0.9rem;">We have sent a 6-digit verification code to<br><strong>{{ Auth::user()->email }}</strong></p>
         </div>

@@ -1,0 +1,111 @@
+/* Category/Services Cards */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 30px;
+    transition: 0.3s;
+    position: relative;
+    z-index: 1;
+    border: 1px solid transparent;
+    /* Prevent layout shift in Dark Mode */
+}
+
+.service-card:hover {
+    box-shadow: var(--shadow);
+    transform: translateY(-5px);
+}
+
+.service-card::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: -10px;
+    width: 60px;
+    height: 60px;
+    background: var(--primary);
+    border-radius: 20px 0 20px 0;
+    z-index: -1;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.service-card:hover::after {
+    opacity: 0.2;
+}
+
+.service-icon {
+    height: 80px;
+    margin-bottom: 1.5rem;
+}
+
+/* Plans Cards */
+.plans-grid {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.plan-card {
+    background: var(--white);
+    border-radius: 25px;
+    overflow: hidden;
+    width: 300px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: center;
+    padding-bottom: 2rem;
+    border: 1px solid transparent;
+    /* Prevent layout shift in Dark Mode */
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.plan-image {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.plan-content {
+    padding: 0 1.5rem;
+}
+
+.plan-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.plan-cost {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+/* General Standard Card */
+.white-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid transparent;
+    /* Dark mode shift fix */
+    margin-bottom: 2rem;
+    /* Spacing between stacked cards */
+}

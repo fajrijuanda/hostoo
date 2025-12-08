@@ -10,13 +10,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Volkhov:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v=13.0">
-    @stack('styles')
-    
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js',
+        'resources/css/style.css',    // masukkan semua CSS custom ke sini
+        'resources/js/navbar.js',     // JS custom juga masuk sini
+        'resources/js/sidebar.js',
+        'resources/js/cursor-clouds.js',
+        'resources/js/back-to-top.js'
+    ])
+
+    <!-- Styles -->
+
+    @stack('styles')
+    
+  
 </head>
 <body>
     @include('components.ui-feedback')
@@ -70,11 +81,11 @@
     </div>
 
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
-    <script src="{{ asset('js/navbar.js') }}"></script>
+    <!-- <script src="{{ asset('js/navbar.js') }}"></script>
     <script src="{{ asset('js/sidebar.js') }}"></script>
     <script src="{{ asset('js/cursor-clouds.js') }}"></script>
 
-    <script src="{{ asset('js/back-to-top.js') }}"></script>
+    <script src="{{ asset('js/back-to-top.js') }}"></script> -->
     @stack('scripts')
 </body>
 </html>

@@ -2,12 +2,12 @@
     <div class="sidebar-header">
         <div class="logo">
             <a href="{{ url('/') }}">
-                <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 40px; width: auto; object-fit: contain; object-position: left;">
-                <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="width: 140px; height: auto; display: none;">
+                <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 40px; width: auto; object-fit: contain; object-position: left;">
+                <img src="{{ Vite::asset('resources/images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="width: 140px; height: auto; display: none;">
                 
                 <!-- Collapsed Logos -->
-                <img src="{{ asset('images/logo-collapsed.png') }}" alt="H" class="logo-collapsed-light" style="display: none; height: 40px; width: auto; margin: 0 auto;">
-                <img src="{{ asset('images/dark-logo-collapsed.png') }}" alt="H" class="logo-collapsed-dark" style="display: none; height: 40px; width: auto; margin: 0 auto;">
+                <img src="{{ Vite::asset('resources/images/logo-collapsed.png') }}" alt="H" class="logo-collapsed-light" style="display: none; height: 40px; width: auto; margin: 0 auto;">
+                <img src="{{ Vite::asset('resources/images/dark-logo-collapsed.png') }}" alt="H" class="logo-collapsed-dark" style="display: none; height: 40px; width: auto; margin: 0 auto;">
             </a>
         </div>
     </div>
