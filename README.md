@@ -1,5 +1,9 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="200" alt="Hostoo Logo">
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="public/images/dark-logo.png">
+        <source media="(prefers-color-scheme: light)" srcset="public/images/logo.png">
+        <img alt="Hostoo Logo" src="public/images/logo.png" width="300">
+    </picture>
 </p>
 
 # Hostoo - Modern Web Hosting Automation Platform
