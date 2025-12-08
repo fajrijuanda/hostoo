@@ -1,6 +1,6 @@
-document.addEventListener('DOMContentLoaded', function () {
+// Navbar Scroll Logic
+const initNavbar = () => {
     const navbar = document.getElementById('navbar');
-
     if (navbar) {
         window.addEventListener('scroll', function () {
             if (window.scrollY > 20) {
@@ -10,4 +10,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+} else {
+    initNavbar();
+}

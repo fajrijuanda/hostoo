@@ -1,4 +1,4 @@
-function toggleSidebar() {
+window.toggleSidebar = function () {
     const sidebar = document.querySelector('.sidebar');
     const mainContent = document.querySelector('.main-with-sidebar');
     const overlay = document.getElementById('sidebarOverlay');

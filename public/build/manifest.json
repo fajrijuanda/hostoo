@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/style.css": {
-    "file": "assets/style-DoqIatEO.css",
+    "file": "assets/style-AbtBXt3w.css",
     "src": "resources/css/style.css",
     "isEntry": true,
     "name": "style",
@@ -118,13 +118,13 @@
     "isEntry": true
   },
   "resources/js/navbar.js": {
-    "file": "assets/navbar-B2rnpA7E.js",
+    "file": "assets/navbar-BHm2JWBC.js",
     "name": "navbar",
     "src": "resources/js/navbar.js",
     "isEntry": true
   },
   "resources/js/sidebar.js": {
-    "file": "assets/sidebar-CcS3ZEeC.js",
+    "file": "assets/sidebar-B2CDSE5b.js",
     "name": "sidebar",
     "src": "resources/js/sidebar.js",
     "isEntry": true
