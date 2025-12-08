@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 08, 2025 at 09:04 AM
+-- Generation Time: Dec 08, 2025 at 11:08 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.2.28
 
@@ -211,7 +211,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (14, '2025_12_07_181000_fix_storage_limits', 1),
 (15, '2025_12_08_000000_create_hosting_plans_table', 1),
 (16, '2025_12_08_001825_add_image_to_hosting_plans_table', 1),
-(17, '2025_12_08_052206_create_subscribers_table', 2);
+(17, '2025_12_08_052206_create_subscribers_table', 2),
+(19, '2025_12_08_094215_add_otp_fields_to_users_table', 3);
 
 -- --------------------------------------------------------
 
@@ -245,7 +246,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('OOF9Z982cymySu56HPPTzfXDqGFfl1cCLEQjXQxM', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoieENraGpKc2s0Q3FTRDdDb2xIWWJyd1VodHRUUjJaRERnblYwc3UyaSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo3OiJ3ZWxjb21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoxMjoiY2FwdGNoYV9jb2RlIjtzOjU6IkpPVUpXIjtzOjU6InN0YXRlIjtzOjQwOiJtR3h4REpBZUwyUGpCSHhpQjdYTVI2aUVUVHlJSWVhenhNWEJKc2UwIjt9', 1765184519);
+('ScYTSxORuazCyyxXSTzK9g6tY2LunBsVMfgvUtQx', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36 Edg/143.0.0.0', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiaUNTcWJxdlpLcEdMZDNmQlBTVktUSldqNEFTejdVa1Y0ZlJxTjdHQyI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MjE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMCI7czo1OiJyb3V0ZSI7czo3OiJ3ZWxjb21lIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoxMjoiY2FwdGNoYV9jb2RlIjtzOjU6IkVKWEFUIjtzOjU6InN0YXRlIjtzOjQwOiJtR3h4REpBZUwyUGpCSHhpQjdYTVI2aUVUVHlJSWVhenhNWEJKc2UwIjtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1765189978),
+('ve63W2ZiBACVxfxlF2ILeboXN7tRhvXLjYnav8jQ', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoidzBUbzJwVHVrOFVRRVg4Q2pOQ2JnQlFHaXpReEx3WkVnMWpiOHdJZSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbiI7czo1OiJyb3V0ZSI7czoxNToiYWRtaW4uZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czoxMjoiY2FwdGNoYV9jb2RlIjtzOjU6Ik9RVFNUIjtzOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1765192019);
 
 -- --------------------------------------------------------
 
@@ -315,17 +317,19 @@ CREATE TABLE `users` (
   `google_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `otp` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `otp_expires_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `storage_limit`, `storage_usage`, `address`, `phone`, `avatar`, `email_verified_at`, `password`, `role`, `google_id`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin Hostoo', 'admin@hostoo.my.id', 0, 0, 'Perumahan Karaba Indah Blok D No. 24', '+6285217861296', 'avatars/miwScjekfMzKb7ePkMoQUsJ2OGeI0yj4KSeDGMmM.png', NULL, '$2y$12$gjWIz8lPiIcPzX4Gs8ZB0OGd6v7hrKBwXHyXJ3M5cgJ6Gvks7ZcTO', 'admin', NULL, NULL, '2025-12-07 20:27:34', '2025-12-07 20:50:01'),
-(2, 'Test User', 'user@hostoo.com', 0, 0, NULL, NULL, NULL, NULL, '$2y$12$CUAuJy7giBnoSWNKaepsn.X5nusDjazC6Wt2pQ5JJrRQBXKXLoi4S', 'user', NULL, NULL, '2025-12-07 20:27:35', '2025-12-07 20:37:33'),
-(3, 'Fajri Yanuar', 'fajriyanuar1@gmail.com', 10737418240, 0, 'Perumahan Karaba Indah Blok D No. 24', '+6285217861296', 'avatars/d9eBCnXodAfs67hs3WKtz3N1CaV4V2Na78KQ2Xzk.jpg', NULL, NULL, 'user', '116681275460172146497', NULL, '2025-12-07 20:38:02', '2025-12-07 20:45:25');
+INSERT INTO `users` (`id`, `name`, `email`, `storage_limit`, `storage_usage`, `address`, `phone`, `avatar`, `email_verified_at`, `password`, `role`, `google_id`, `remember_token`, `created_at`, `updated_at`, `otp`, `otp_expires_at`) VALUES
+(1, 'Admin Hostoo', 'admin@hostoo.my.id', 0, 0, 'Perumahan Karaba Indah Blok D No. 24', '+6285217861296', 'avatars/XgM2OSMhHfi8n4ywuBbKdhXEpW9Cxp9oU9XHv84D.png', '2025-12-08 03:20:57', '$2y$12$gjWIz8lPiIcPzX4Gs8ZB0OGd6v7hrKBwXHyXJ3M5cgJ6Gvks7ZcTO', 'admin', NULL, NULL, '2025-12-07 20:27:34', '2025-12-08 03:20:57', NULL, NULL),
+(2, 'Test User', 'user@hostoo.com', 0, 0, NULL, NULL, NULL, '2025-12-08 03:20:57', '$2y$12$PWgWztJnPvp1lb/p/b4XJuvZenR5DidvXekyMLgIfeCVP9lH5EqbK', 'user', NULL, NULL, '2025-12-07 20:27:35', '2025-12-08 03:30:16', NULL, NULL),
+(3, 'Fajri Yanuar', 'fajriyanuar1@gmail.com', 10737418240, 0, 'Perumahan Karaba Indah Blok D No. 24', '+6285217861296', 'avatars/d9eBCnXodAfs67hs3WKtz3N1CaV4V2Na78KQ2Xzk.jpg', '2025-12-08 03:25:06', NULL, 'user', '116681275460172146497', NULL, '2025-12-07 20:38:02', '2025-12-08 03:25:06', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -501,7 +505,7 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `subscribers`
