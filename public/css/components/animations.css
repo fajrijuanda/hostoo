@@ -65,99 +65,55 @@
 
 
 /* 
-   Flight Path Re-calculated (Slower & Higher):
-   0-50%: Fly from Bottom-Right to LEFT-EDGE (Middle) - Ascending Fast
-   50-60%: Turn/Bank
-   60-100%: Fly to Top-Right Exit - LESS STEEP
+   New Zig-Zag Flight Path:
+   0-30%: Fly Left to Edge
+   30-35%: Bank & Turn Right
+   35-65%: Fly Right to Edge
+   65-70%: Bank & Turn Left
+   70-100%: Fly Up-Left to Exit (Sync with Scroll)
 */
 @keyframes flyPath {
     0% {
-        opacity: 1;
-        transform: translate(0, 0);
-    }
-
-    /* FLY HIGHER SOONER - 25% mark */
-    25% {
-        transform: translate(-45vw, -30vh);
-        /* Already 30% up the screen */
+        transform: translate(0, 0); /* Start Bottom Right */
         opacity: 1;
     }
-
-    50% {
-        transform: translate(-94vw, -55vh);
-        /* Mid-Left (Higher than before) */
-        opacity: 1;
+    
+    /* Leg 1: Left */
+    30% {
+        transform: translate(-80vw, -10vh); /* Left Side */
     }
-
-    60% {
-        transform: translate(-94vw, -58vh);
-        /* Holding */
-        opacity: 1;
+    
+    /* Leg 2: Right */
+    65% {
+        transform: translate(0vw, -20vh); /* Back to Right Side (slightly higher) */
     }
-
+    
+    /* Leg 3: Final Ascent */
     100% {
-        /* Fly to Top Right Exit - Flatter Angle */
-        transform: translate(30vw, -110vh);
+        transform: translate(-50vw, -110vh); /* Top Center/Left Exit */
         opacity: 0;
     }
 }
 
 @keyframes bankPlane {
-
-    /* PHASE 1: Taking Off (0-20%) - Slow Scale */
-    0% {
-        transform: scaleX(-1) rotate(-30deg) scale(1);
-    }
-
-    10% {
-        transform: scaleX(-1) rotate(-28deg) scale(1.2);
-    }
-
-    20% {
-        transform: scaleX(-1) rotate(-25deg) scale(1.5);
-    }
-
-    /* PHASE 2: Approach & ZOOM (20-50%) - Rapid Smooth Scale */
-    30% {
-        transform: scaleX(-1) rotate(-15deg) scale(2.0);
-    }
-
-    40% {
-        transform: scaleX(-1) rotate(-5deg) scale(2.8);
-    }
-
-    50% {
-        transform: scaleX(-1) rotate(0deg) scale(3.5);
-    }
-
-    /* MAX SIZE at LEFT EDGE */
-
-    /* PHASE 3: The Turn (50-60%) - Flip & Bank */
-    55% {
-        transform: scaleX(-1) rotate(45deg) scale(3.5);
-    }
-
-    /* Bank Right while facing left */
-    60% {
-        transform: scaleX(1) rotate(-45deg) scale(3.5);
-    }
-
-    /* FLIP to Face Right */
-
-    /* PHASE 4: Exit (60-100%) - Fly Away & Shrink */
-    70% {
-        transform: scaleX(1) rotate(-50deg) scale(3.0);
-    }
-
-    80% {
-        transform: scaleX(1) rotate(-55deg) scale(2.0);
-    }
-
-    90% {
-        transform: scaleX(1) rotate(-60deg) scale(1.0);
-    }
-
-    100% {
-        transform: scaleX(1) rotate(-60deg) scale(0.5);
-    }
+    /* 0-30%: Flying Left (Face Left) */
+    0% { transform: scaleX(-1) rotate(-10deg) scale(1); }
+    25% { transform: scaleX(-1) rotate(0deg) scale(1.2); }
+    
+    /* 30-35%: Turn Right */
+    30% { transform: scaleX(-1) rotate(45deg) scale(1.2); } /* Bank Up */
+    32.5% { transform: scaleX(0) rotate(0deg) scale(1.2); } /* Flip (Thin) */
+    35% { transform: scaleX(1) rotate(-10deg) scale(1.2); } /* Face Right */
+    
+    /* 35-65%: Flying Right (Face Right) */
+    50% { transform: scaleX(1) rotate(0deg) scale(1.2); }
+    
+    /* 65-70%: Turn Left */
+    65% { transform: scaleX(1) rotate(-45deg) scale(1.2); } /* Bank Up */
+    67.5% { transform: scaleX(0) rotate(0deg) scale(1.2); } /* Flip (Thin) */
+    70% { transform: scaleX(-1) rotate(-10deg) scale(1.2); } /* Face Left */
+    
+    /* 70-100%: Ascent (Face Left/Up) */
+    85% { transform: scaleX(-1) rotate(-30deg) scale(1.5); }
+    100% { transform: scaleX(-1) rotate(-45deg) scale(0.5); }
 }
