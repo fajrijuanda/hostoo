@@ -148,6 +148,10 @@ class AuthController extends Controller
 
             Auth::login($user);
 
+            if ($user->isAdmin()) {
+                return redirect()->route('admin.dashboard');
+            }
+
             if (!$user->address || !$user->phone) {
                 return redirect()->route('profile.edit')->with('warning', 'Please complete your profile first.');
             }
