@@ -39,6 +39,10 @@ class AuthController extends Controller
             // User said: "sidebar langsung berubah menjadi sidebar admin malau saat pertama kali login perlu mengisi profile terlebih dahulu"
             // This suggests they MIGHT go to profile first. 
             
+            if ($user->isAdmin()) {
+                return redirect()->route('admin.dashboard');
+            }
+
             if (!$user->email_verified_at) {
                 return redirect()->route('verification.notice')->with('warning', 'Please verify your email address first.');
             }
@@ -46,10 +50,6 @@ class AuthController extends Controller
             // Redirect Admin immediately or after profile check?
             if (!$user->address || !$user->phone) {
                  return redirect()->route('profile.edit')->with('warning', 'Please complete your profile first.');
-            }
-            
-            if ($user->isAdmin()) {
-                return redirect()->route('admin.dashboard');
             }
 
             return redirect()->intended('/dashboard');
