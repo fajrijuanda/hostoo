@@ -11,12 +11,12 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // 1. Total Users (Exclude Admins)
-        $totalUsers = User::where('role', '!=', 'admin')->count();
+        // 1. Total Users (Strict 'user' role)
+        $totalUsers = User::where('role', 'user')->count();
         
         // Growth: New Users Today vs Yesterday
-        $newUsersToday = User::where('role', '!=', 'admin')->whereDate('created_at', Carbon::today())->count();
-        $newUsersYesterday = User::where('role', '!=', 'admin')->whereDate('created_at', Carbon::yesterday())->count();
+        $newUsersToday = User::where('role', 'user')->whereDate('created_at', Carbon::today())->count();
+        $newUsersYesterday = User::where('role', 'user')->whereDate('created_at', Carbon::yesterday())->count();
         
         $userGrowth = 0;
         if ($newUsersYesterday > 0) {
@@ -39,7 +39,7 @@ class AdminController extends Controller
             $subGrowth = 100;
         }
 
-        $totalStorage = User::where('role', '!=', 'admin')->sum('storage_usage');
+        $totalStorage = User::where('role', 'user')->sum('storage_usage');
         $pendingRequests = Subscription::where('status', 'pending')->count();
         $revenue = Subscription::where('status', 'active')->sum('price');
 
