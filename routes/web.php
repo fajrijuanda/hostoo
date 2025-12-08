@@ -21,6 +21,11 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
+// Email Verification
+Route::get('/verify-email', [\App\Http\Controllers\VerificationController::class, 'show'])->middleware('auth')->name('verification.notice');
+Route::post('/verify-email', [\App\Http\Controllers\VerificationController::class, 'verify'])->middleware('auth')->name('verification.verify');
+Route::post('/verify-email/resend', [\App\Http\Controllers\VerificationController::class, 'resend'])->middleware('auth')->name('verification.resend');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Google Auth

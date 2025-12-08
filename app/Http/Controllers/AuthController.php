@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerifyOtpMail;
 
 class AuthController extends Controller
 {
@@ -36,6 +39,11 @@ class AuthController extends Controller
             // User said: "sidebar langsung berubah menjadi sidebar admin malau saat pertama kali login perlu mengisi profile terlebih dahulu"
             // This suggests they MIGHT go to profile first. 
             
+            if (!$user->email_verified_at) {
+                return redirect()->route('verification.notice')->with('warning', 'Please verify your email address first.');
+            }
+
+            // Redirect Admin immediately or after profile check?
             if (!$user->address || !$user->phone) {
                  return redirect()->route('profile.edit')->with('warning', 'Please complete your profile first.');
             }
@@ -70,18 +78,26 @@ class AuthController extends Controller
             }],
         ]);
 
+        $otp = rand(100000, 999999);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'user'
+            'role' => 'user',
+            'otp' => $otp,
+            'otp_expires_at' => \Carbon\Carbon::now()->addMinutes(10)
         ]);
 
         Auth::login($user);
 
-        Auth::login($user);
+        // Send OTP Email
+        try {
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\VerifyOtpMail($otp));
+        } catch (\Exception $e) {
+            // Log error but allow proceed
+        }
 
-        return redirect()->route('profile.edit')->with('success', 'Account created! Please complete your profile.');
+        return redirect()->route('verification.notice')->with('success', 'Account created! Please verify your email.');
     }
 
     // Logout
@@ -112,12 +128,21 @@ class AuthController extends Controller
                     'email' => $socialUser->getEmail(),
                     'google_id' => $socialUser->getId(),
                     'role' => 'user',
-                    'password' => null // No password for social login
+                    'password' => null, // No password for social login
+                    'email_verified_at' => Carbon::now() // Auto-verify Google users
                 ]);
             } else {
-                // Update google_id if existing
+                // Update google_id if existing and ensure email is verified
+                $updates = [];
                 if (!$user->google_id) {
-                    $user->update(['google_id' => $socialUser->getId()]);
+                    $updates['google_id'] = $socialUser->getId();
+                }
+                if (!$user->email_verified_at) {
+                    $updates['email_verified_at'] = Carbon::now();
+                }
+
+                if (!empty($updates)) {
+                    $user->update($updates);
                 }
             }
 
