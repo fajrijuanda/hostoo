@@ -45,7 +45,7 @@ class AdminPlanController extends Controller
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
             // Store in storage/app/public/plans
-            $request->image->storeAs('plans', $imageName, 'public');
+            Storage::disk('public')->putFileAs('plans', $request->file('image'), $imageName);
             $data['image'] = $imageName;
         }
         
@@ -86,7 +86,7 @@ class AdminPlanController extends Controller
                 Storage::disk('public')->delete('plans/' . $plan->image);
             }
             $imageName = time().'.'.$request->image->extension();
-            $request->image->storeAs('plans', $imageName, 'public');
+            Storage::disk('public')->putFileAs('plans', $request->file('image'), $imageName);
             $data['image'] = $imageName;
         }
 

@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
         backToTopBtn = document.createElement('div');
         backToTopBtn.id = 'back-to-top';
         // Use Image as requested
-        backToTopBtn.innerHTML = '<img src="/images/cursor_plane.png" alt="Back to Top">';
+        const planeImgUrl = new URL('../images/cursor_plane.png', import.meta.url).href;
+        backToTopBtn.innerHTML = `<img src="${planeImgUrl}" alt="Back to Top">`;
         document.body.appendChild(backToTopBtn);
     }
 

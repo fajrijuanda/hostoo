@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Create Plane Element
     const plane = document.createElement('img');
-    plane.src = '/images/cursor_plane.png';
+    // Import image directly
+    const planeImgUrl = new URL('../images/cursor_plane.png', import.meta.url).href;
+    plane.src = planeImgUrl;
     plane.id = 'cursor-plane';
     Object.assign(plane.style, {
         position: 'fixed',
