@@ -1,0 +1,163 @@
+/* Back to Top Plane Animation (Image Version) */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    z-index: 10001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#back-to-top img {
+    width: 100%;
+    height: auto;
+    /* Initial State: Facing Up-Left (-30deg) */
+    transform: scaleX(-1) rotate(-30deg);
+    transition: transform 0.3s ease;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+#back-to-top:hover img {
+    transform: scaleX(-1) rotate(-30deg) scale(1.1);
+}
+
+/* Smoke Overlay */
+#smoke-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+    z-index: 10000;
+    /* Just below plane (10001) */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    backdrop-filter: blur(10px);
+}
+
+#smoke-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Flying Animation Logic */
+#back-to-top.flying {
+    pointer-events: none;
+    /* Animate with Dynamic Duration from JS */
+    animation: flyPath var(--fly-duration, 5s) cubic-bezier(0.45, 0, 0.55, 1) forwards;
+}
+
+#back-to-top.flying img {
+    /* Animate image rotation/banking */
+    animation: bankPlane var(--fly-duration, 5s) linear forwards;
+}
+
+
+/* 
+   Flight Path Re-calculated (Slower & Higher):
+   0-50%: Fly from Bottom-Right to LEFT-EDGE (Middle) - Ascending Fast
+   50-60%: Turn/Bank
+   60-100%: Fly to Top-Right Exit - LESS STEEP
+*/
+@keyframes flyPath {
+    0% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+
+    /* FLY HIGHER SOONER - 25% mark */
+    25% {
+        transform: translate(-45vw, -30vh);
+        /* Already 30% up the screen */
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-94vw, -55vh);
+        /* Mid-Left (Higher than before) */
+        opacity: 1;
+    }
+
+    60% {
+        transform: translate(-94vw, -58vh);
+        /* Holding */
+        opacity: 1;
+    }
+
+    100% {
+        /* Fly to Top Right Exit - Flatter Angle */
+        transform: translate(30vw, -110vh);
+        opacity: 0;
+    }
+}
+
+@keyframes bankPlane {
+
+    /* PHASE 1: Taking Off (0-20%) - Slow Scale */
+    0% {
+        transform: scaleX(-1) rotate(-30deg) scale(1);
+    }
+
+    10% {
+        transform: scaleX(-1) rotate(-28deg) scale(1.2);
+    }
+
+    20% {
+        transform: scaleX(-1) rotate(-25deg) scale(1.5);
+    }
+
+    /* PHASE 2: Approach & ZOOM (20-50%) - Rapid Smooth Scale */
+    30% {
+        transform: scaleX(-1) rotate(-15deg) scale(2.0);
+    }
+
+    40% {
+        transform: scaleX(-1) rotate(-5deg) scale(2.8);
+    }
+
+    50% {
+        transform: scaleX(-1) rotate(0deg) scale(3.5);
+    }
+
+    /* MAX SIZE at LEFT EDGE */
+
+    /* PHASE 3: The Turn (50-60%) - Flip & Bank */
+    55% {
+        transform: scaleX(-1) rotate(45deg) scale(3.5);
+    }
+
+    /* Bank Right while facing left */
+    60% {
+        transform: scaleX(1) rotate(-45deg) scale(3.5);
+    }
+
+    /* FLIP to Face Right */
+
+    /* PHASE 4: Exit (60-100%) - Fly Away & Shrink */
+    70% {
+        transform: scaleX(1) rotate(-50deg) scale(3.0);
+    }
+
+    80% {
+        transform: scaleX(1) rotate(-55deg) scale(2.0);
+    }
+
+    90% {
+        transform: scaleX(1) rotate(-60deg) scale(1.0);
+    }
+
+    100% {
+        transform: scaleX(1) rotate(-60deg) scale(0.5);
+    }
+}

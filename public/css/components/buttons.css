@@ -1,0 +1,107 @@
+/* Global Modern 3D Button Styles */
+button,
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-info,
+.btn-auth,
+.btn-submit,
+.plan-btn {
+    border: none !important;
+    outline: none !important;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: white;
+    text-decoration: none;
+    line-height: normal;
+}
+
+/* Ensure background colors are set if not by specific classes */
+.btn-primary,
+.plan-btn {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-auth {
+    background-color: var(--secondary);
+    color: white;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover,
+.btn:hover,
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-danger:hover,
+.btn-info:hover,
+.btn-auth:hover,
+.btn-submit:hover,
+.plan-btn:hover,
+.btn-google:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.btn-google:hover {
+    color: #333 !important;
+}
+
+button:active,
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Fix Login Submit Button */
+.btn-submit {
+    background-color: var(--secondary) !important;
+    color: white !important;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Modern 3D Google Button */
+.btn-google {
+    background: white;
+    color: #333;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    gap: 10px;
+}
