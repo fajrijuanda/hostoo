@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\HostingPlan;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage;
+
 class AdminPlanController extends Controller
 {
     public function index()
@@ -42,7 +44,8 @@ class AdminPlanController extends Controller
         // Handle Image Upload
         if ($request->hasFile('image')) {
             $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            // Store in storage/app/public/plans
+            $request->image->storeAs('plans', $imageName, 'public');
             $data['image'] = $imageName;
         }
         
@@ -79,11 +82,11 @@ class AdminPlanController extends Controller
         // Handle Image Upload
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($plan->image && file_exists(public_path('images/' . $plan->image))) {
-                unlink(public_path('images/' . $plan->image));
+            if ($plan->image) {
+                Storage::disk('public')->delete('plans/' . $plan->image);
             }
             $imageName = time().'.'.$request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->storeAs('plans', $imageName, 'public');
             $data['image'] = $imageName;
         }
 
@@ -94,6 +97,9 @@ class AdminPlanController extends Controller
 
     public function destroy(HostingPlan $plan)
     {
+        if ($plan->image) {
+            Storage::disk('public')->delete('plans/' . $plan->image);
+        }
         $plan->delete();
         return redirect()->route('admin.plans.index')->with('success', 'Hosting Plan deleted successfully.');
     }
