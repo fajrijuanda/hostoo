@@ -43,6 +43,9 @@ class CyberPanelService
             'phpSelection' => 'PHP 8.2',
             'websiteOwner' => $ownerName, 
             'acl' => 'user', // Default ACL
+            'dkimCheck' => 1, // Enable DKIM
+            'openBasedir' => 1, // Enable OpenBasedir protection
+            'createDNS' => 1, // Ensure DNS Zone is created
         ]);
 
         Log::info("CyberPanel Create Website [$domainName]: " . $response->body());

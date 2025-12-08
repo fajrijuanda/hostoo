@@ -1,5 +1,5 @@
 <header id="navbar" class="navbar-custom">
-    @if(!Auth::check() || (!Auth::user()->hasActiveSubscription() && !Auth::user()->isAdmin()))
+    @if(!Auth::check() || (!Auth::user()->hasActiveSubscription() && !Auth::user()->isAdmin()) || request()->is('/'))
     <div class="logo">
         <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 48px;">
         <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="height: 48px; display: none;">
@@ -9,7 +9,7 @@
         
         <!-- Search Bar (Only Auth + Active Sub or Admin) -->
         @auth
-            @if(Auth::user()->hasActiveSubscription() || Auth::user()->isAdmin())
+            @if((Auth::user()->hasActiveSubscription() || Auth::user()->isAdmin()) && !request()->is('/'))
             <button id="sidebarToggle" onclick="toggleSidebar()" style="background:none; border:none; font-size: 1.5rem; cursor:pointer; color:var(--secondary); margin-right: 15px;">
                 <i class="fas fa-bars"></i>
             </button>
@@ -30,7 +30,7 @@
         <!-- Centered Nav Links -->
         <nav style="display: flex; justify-content: center; flex: 1;">
             <ul class="nav-links" style="display: flex; gap: 2rem; margin: 0; padding: 0; list-style: none;">
-                @if(!Auth::check() || (!Auth::user()->hasActiveSubscription() && !Auth::user()->isAdmin()))
+                @if(!Auth::check() || (!Auth::user()->hasActiveSubscription() && !Auth::user()->isAdmin()) || request()->is('/'))
                     <li>
                         @if(Request::is('/'))
                             <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Home</a>
@@ -40,6 +40,13 @@
                     </li>
                     <li><a href="{{ url('/#features') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Features</a></li>
                     <li><a href="{{ url('/#plans') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Hosting Plans</a></li>
+                    @auth
+                        @if(request()->is('/'))
+                            <li>
+                                <a href="{{ Auth::user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Dashboard</a>
+                            </li>
+                        @endif
+                    @endauth
                 @endif
             </ul>
         </nav>

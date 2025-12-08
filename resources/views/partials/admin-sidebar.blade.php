@@ -1,12 +1,14 @@
 <div class="sidebar" style="display: flex; flex-direction: column;">
     <div class="sidebar-header">
         <div class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 40px; width: auto; object-fit: contain; object-position: left;">
-            <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="width: 140px; height: auto; display: none;">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="Hostoo Logo" class="logo-light" style="height: 40px; width: auto; object-fit: contain; object-position: left;">
+                <img src="{{ asset('images/dark-logo.png') }}" alt="Hostoo Logo Dark" class="logo-dark" style="width: 140px; height: auto; display: none;">
 
-            <!-- Collapsed Logos -->
-            <img src="{{ asset('images/logo-collapsed.png') }}" alt="H" class="logo-collapsed-light" style="display: none; height: 40px; width: auto; margin: 0 auto;">
-            <img src="{{ asset('images/dark-logo-collapsed.png') }}" alt="H" class="logo-collapsed-dark" style="display: none; height: 40px; width: auto; margin: 0 auto;">
+                <!-- Collapsed Logos -->
+                <img src="{{ asset('images/logo-collapsed.png') }}" alt="H" class="logo-collapsed-light" style="display: none; height: 40px; width: auto; margin: 0 auto;">
+                <img src="{{ asset('images/dark-logo-collapsed.png') }}" alt="H" class="logo-collapsed-dark" style="display: none; height: 40px; width: auto; margin: 0 auto;">
+            </a>
         </div>
     </div>
     <ul class="sidebar-menu" style="flex: 1;">

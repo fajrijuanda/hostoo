@@ -21,7 +21,7 @@
             <div class="alert alert-info" style="margin-bottom: 1.5rem; font-size: 0.9rem;">
                 <strong><i class="fas fa-info-circle"></i> DNS Configuration:</strong><br>
                 <div style="margin-top: 8px; font-size: 0.85rem;">Set A Record to:</div>
-                <code style="background: rgba(0,0,0,0.05); color: var(--primary); padding: 5px 10px; border-radius: 6px; font-weight: 700; font-size: 1.1rem; display: block; margin-top: 5px; text-align: center; border: 1px dashed var(--primary);">192.168.1.100</code>
+                <code style="background: rgba(0,0,0,0.05); color: var(--primary); padding: 5px 10px; border-radius: 6px; font-weight: 700; font-size: 1.1rem; display: block; margin-top: 5px; text-align: center; border: 1px dashed var(--primary);">{{ gethostbyname(parse_url(config('services.cyberpanel.url'), PHP_URL_HOST)) }}</code>
             </div>
 
             <form action="{{ route('domains.store') }}" method="POST">

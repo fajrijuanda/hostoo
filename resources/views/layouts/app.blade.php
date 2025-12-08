@@ -46,7 +46,7 @@
         }
     @endphp
 
-    @if($hasActiveSub)
+    @if($hasActiveSub && !request()->is('/'))
         @if(Auth::user()->isAdmin())
             @include('partials.admin-sidebar')
         @else
