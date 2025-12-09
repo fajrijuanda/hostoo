@@ -1,1 +1,0 @@
-const n=()=>{const e=document.getElementById("navbar");e&&window.addEventListener("scroll",function(){window.scrollY>20?e.classList.add("scrolled"):e.classList.remove("scrolled")})};document.readyState==="loading"?document.addEventListener("DOMContentLoaded",n):n();

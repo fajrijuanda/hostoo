@@ -28,22 +28,22 @@
         @endauth
 
         <!-- Centered Nav Links -->
-        <nav style="display: flex; justify-content: center; flex: 1;">
-            <ul class="nav-links" style="display: flex; gap: 2rem; margin: 0; padding: 0; list-style: none;">
+        <nav id="mainNav" class="nav-container">
+            <ul class="nav-links">
                 @if(!Auth::check() || (!Auth::user()->hasActiveSubscription() && !Auth::user()->isAdmin()) || request()->is('/'))
                     <li>
                         @if(Request::is('/'))
-                            <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Home</a>
+                            <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="nav-item">Home</a>
                         @else
-                            <a href="{{ url('/') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Home</a>
+                            <a href="{{ url('/') }}" class="nav-item">Home</a>
                         @endif
                     </li>
-                    <li><a href="{{ url('/#features') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Features</a></li>
-                    <li><a href="{{ url('/#plans') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Hosting Plans</a></li>
+                    <li><a href="{{ url('/#features') }}" class="nav-item">Features</a></li>
+                    <li><a href="{{ url('/#plans') }}" class="nav-item">Hosting Plans</a></li>
                     @auth
                         @if(request()->is('/'))
                             <li>
-                                <a href="{{ Auth::user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" style="color: var(--text-color); text-decoration: none; font-weight: 500;">Dashboard</a>
+                                <a href="{{ Auth::user()->isAdmin() ? route('admin.dashboard') : route('dashboard') }}" class="nav-item">Dashboard</a>
                             </li>
                         @endif
                     @endauth
@@ -67,7 +67,7 @@
                             <i class="fas fa-user" style="color: #ccc;"></i>
                         </div>
                     @endif
-                    <span>{{ Auth::user()->name }}</span>
+                    <span class="user-name-text">{{ Auth::user()->name }}</span>
                     <i class="fas fa-chevron-down" style="font-size: 0.8rem;"></i>
                 </button>
 
@@ -91,7 +91,12 @@
         @else
             <a href="{{ route('login') }}" class="btn-auth" style="border:none; background: var(--primary); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: 600;">Login</a>
         @endauth
-    </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuToggle" class="mobile-menu-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
 </header>
 
 <style>
