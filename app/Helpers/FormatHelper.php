@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Helpers;
+
+class FormatHelper
+{
+    /**
+     * Format bytes to a human-readable string.
+     *
+     * @param int $size
+     * @param int $precision
+     * @return string
+     */
+    public static function formatBytes($size, $precision = 2)
+    {
+        if ($size <= 0) {
+            return '0 B';
+        }
+
+        $base = log($size, 1024);
+        $suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+
+        return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
+    }
+}

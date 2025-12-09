@@ -10,7 +10,7 @@
     <!-- Subscription Status -->
     <div class="status-card white-card" style="padding: 2rem; border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 2rem; display: flex; align-items: center; gap: 2rem;">
         @php
-            $subscription = Auth::user()->subscriptions()->latest()->first();
+            $subscription = Auth::user()->subscriptions()->where('status', 'active')->latest()->first() ?? Auth::user()->subscriptions()->latest()->first();
         @endphp
 
         <div class="status-icon" style="width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; 

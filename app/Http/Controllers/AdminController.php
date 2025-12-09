@@ -128,16 +128,23 @@ class AdminController extends Controller
 
         try {
             // Call CyberPanel Service
-            $this->cyberPanel->createCyberPanelUser(
+            $response = $this->cyberPanel->createCyberPanelUser(
                 $user->name,
                 $username,
                 $user->email,
                 $password
             );
+            
+            // Check for API error structure usually {"error": 1, "errorMessage": "..."}
+            // Or if JSON decoding failed (null)
+            if (isset($response['error']) && $response['error'] == 1) {
+                \Illuminate\Support\Facades\Log::error("CyberPanel API Error: " . ($response['errorMessage'] ?? 'Unknown error'));
+                 return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel User creation failed: ' . ($response['errorMessage'] ?? 'Unknown error'));
+            }
+
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error("CyberPanel User Creation Failed for {$user->email}: " . $e->getMessage());
-            // Proceed anyway? Or allow admin to retry?
-            // For now, proceed but log it.
+            return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel connection failed. Please check logs/configuration.');
         }
 
         // Send Approval Email with Credentials
