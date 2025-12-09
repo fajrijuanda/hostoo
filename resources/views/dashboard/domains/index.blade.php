@@ -14,22 +14,37 @@
             <div style="margin-bottom: 1.5rem;">
                 <h3 style="margin-bottom: 0.5rem;"><i class="fas fa-link" style="color: var(--primary); margin-right: 8px;"></i> Connect Domain</h3>
                 <p style="color: #666; font-size: 0.9rem; line-height: 1.5;">
-                    Point your domain's <strong>A Record</strong> to our server IP to get started.
+                    To connect your domain, please choose one of the methods below and update your DNS settings at your domain registrar.
                 </p>
             </div>
 
             <div class="alert alert-info" style="margin-bottom: 1.5rem; font-size: 0.9rem;">
-                <strong><i class="fas fa-info-circle"></i> DNS Configuration:</strong><br>
-                <div style="margin-top: 8px; font-size: 0.85rem;">Set A Record to:</div>
-                <code style="background: rgba(0,0,0,0.05); color: var(--primary); padding: 5px 10px; border-radius: 6px; font-weight: 700; font-size: 1.1rem; display: block; margin-top: 5px; text-align: center; border: 1px dashed var(--primary);">{{ gethostbyname(parse_url(config('services.cyberpanel.url'), PHP_URL_HOST)) }}</code>
+                <strong><i class="fas fa-book"></i> Method 1: Nameservers (Recommended)</strong><br>
+                <div style="margin-top: 5px; margin-bottom: 5px; font-size: 0.85rem;">Point your domain to our nameservers:</div>
+                <code style="background: rgba(0,0,0,0.05); color: var(--primary); padding: 5px 10px; border-radius: 6px; font-weight: 600; display: block; margin-bottom: 5px; border: 1px dashed var(--primary);">ns1.hostoo.my.id</code>
+                <code style="background: rgba(0,0,0,0.05); color: var(--primary); padding: 5px 10px; border-radius: 6px; font-weight: 600; display: block; border: 1px dashed var(--primary);">ns2.hostoo.my.id</code>
+            </div>
+
+            <div class="alert alert-warning" style="margin-bottom: 1.5rem; font-size: 0.9rem;">
+                <strong><i class="fas fa-exchange-alt"></i> Method 2: A Record</strong><br>
+                <div style="margin-top: 5px; margin-bottom: 5px; font-size: 0.85rem;">Or point your <strong>@</strong> and <strong>www</strong> records to:</div>
+                <code style="background: rgba(0,0,0,0.05); color: #856404; padding: 5px 10px; border-radius: 6px; font-weight: 700; font-size: 1.1rem; display: block; text-align: center; border: 1px dashed #ffeeba;">{{ gethostbyname(parse_url(config('services.cyberpanel.url'), PHP_URL_HOST)) }}</code>
             </div>
 
             <form action="{{ route('domains.store') }}" method="POST">
                 @csrf
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 15px;">
                     <label>Domain Name</label>
                     <input type="text" name="domain_name" class="form-control" placeholder="example.com" required>
                 </div>
+
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label style="display: flex; align-items: start; gap: 10px; font-size: 0.9rem; color: #555; cursor: pointer;">
+                        <input type="checkbox" name="dns_confirmed" required style="margin-top: 4px;">
+                        <span>I have updated my Nameservers or A Record as shown above. I understand it may take up to 24 hours to propagate.</span>
+                    </label>
+                </div>
+
                 <button type="submit" class="btn btn-submit" style="width: 100%;">
                     Connect Domain
                 </button>
