@@ -136,10 +136,11 @@ class AdminController extends Controller
             );
             
             // Check for API error structure usually {"error": 1, "errorMessage": "..."}
-            // Or if JSON decoding failed (null)
-            if (isset($response['error']) && $response['error'] == 1) {
-                \Illuminate\Support\Facades\Log::error("CyberPanel API Error: " . ($response['errorMessage'] ?? 'Unknown error'));
-                 return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel User creation failed: ' . ($response['errorMessage'] ?? 'Unknown error'));
+            // Or {"status": 0, "error_message": "..."}
+            if ((isset($response['error']) && $response['error'] == 1) || isset($response['error_message'])) {
+                $msg = $response['errorMessage'] ?? $response['error_message'] ?? 'Unknown error';
+                \Illuminate\Support\Facades\Log::error("CyberPanel API Error: " . $msg);
+                 return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel User creation failed: ' . $msg);
             }
 
         } catch (\Exception $e) {

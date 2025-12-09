@@ -69,20 +69,29 @@ class CyberPanelService
         return $response->json();
     }
 
-    public function createCyberPanelUser($name, $username, $email, $password)
+     public function createCyberPanelUser($name, $username, $email, $password)
     {
          // Endpoint: /api/submitUserCreation
-         // Note: Endpoint might be 'createUsers' or 'submitUserCreation' depending on version. 
-         // Most docs say: /api/createUsers or /api/submitUserCreation
-         // Let's assume /api/createUsers for now or check if we need to verify.
-         // Common: /api/submitUserCreation
          $endpoint = rtrim($this->url, '/') . '/api/submitUserCreation';
+
+         // Split Name for First/Last
+         $parts = explode(' ', trim($name));
+         $firstName = $parts[0];
+         $lastName = isset($parts[1]) ? implode(' ', array_slice($parts, 1)) : $firstName; // Use valid last name or repeat first
+
+         // CyberPanel validation: Last Name > 2 chars, alphabetic.
+         // Let's sanitize and ensure length.
+         $firstName = preg_replace('/[^a-zA-Z]/', '', $firstName);
+         $lastName = preg_replace('/[^a-zA-Z]/', '', $lastName);
+
+         if(strlen($firstName) < 3) $firstName .= "User";
+         if(strlen($lastName) < 3) $lastName .= "User";
 
          $response = Http::withoutVerifying()->post($endpoint, [
             'adminUser' => $this->adminUsername,
             'adminPass' => $this->adminPassword,
-            'firstName' => $name,
-            'lastName' => '.', // Optional or dot
+            'firstName' => $firstName,
+            'lastName' => $lastName, 
             'email' => $email,
             'userName' => $username,
             'password' => $password,
