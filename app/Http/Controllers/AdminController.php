@@ -170,4 +170,16 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Subscription rejected/deleted.');
     }
+
+    public function deleteSubscription($id)
+    {
+        $subscription = Subscription::findOrFail($id);
+        
+        // Optional: Add logic here to delete from CyberPanel if needed (e.g., delete website/user)
+        // For now, primarily for DB cleanup/retry.
+        
+        $subscription->delete();
+
+        return redirect()->back()->with('success', 'Subscription deleted successfully. User can now request a new plan.');
+    }
 }

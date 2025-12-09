@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/subscriptions', [\App\Http\Controllers\AdminController::class, 'subscriptions'])->name('admin.subscriptions');
         Route::post('/subscriptions/approve/{id}', [\App\Http\Controllers\AdminController::class, 'approveSubscription'])->name('admin.subscriptions.approve');
         Route::post('/subscriptions/reject/{id}', [\App\Http\Controllers\AdminController::class, 'rejectSubscription'])->name('admin.subscriptions.reject');
+        Route::delete('/subscriptions/{id}', [\App\Http\Controllers\AdminController::class, 'deleteSubscription'])->name('admin.subscriptions.delete');
 
         // Hosting Plans
         Route::resource('plans', \App\Http\Controllers\AdminPlanController::class)->names('admin.plans');

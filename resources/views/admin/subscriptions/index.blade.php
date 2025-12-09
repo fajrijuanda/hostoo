@@ -191,9 +191,19 @@
                                 @endif
                             </td>
                             <td style="padding: 1.2rem 1.5rem; text-align: right;">
-                                <span style="background: #e0f2f1; color: #00695c; padding: 6px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
-                                    <i class="fas fa-check-circle"></i> Active
-                                </span>
+                                <div style="display: flex; align-items: center; justify-content: flex-end; gap: 10px;">
+                                    <span style="background: #e0f2f1; color: #00695c; padding: 6px 12px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+                                        <i class="fas fa-check-circle"></i> Active
+                                    </span>
+                                    
+                                    <form id="delete-form-{{ $sub->id }}" action="{{ route('admin.subscriptions.delete', $sub->id) }}" method="POST" onsubmit="confirmDelete(event, 'delete-form-{{ $sub->id }}')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" style="background: #ffebee; color: #c62828; width: 32px; height: 32px; border-radius: 8px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s;" title="Delete / Reset">
+                                            <i class="fas fa-trash" style="font-size: 0.9rem;"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         @empty
@@ -234,6 +244,21 @@
             type: 'warning',
             showCancel: true,
             confirmText: 'Yes, Reject'
+        }).then(confirmed => {
+            if(confirmed) {
+                document.getElementById(formId).submit();
+            }
+        });
+    }
+
+    function confirmDelete(e, formId) {
+        e.preventDefault();
+        Hostoo.alert({
+            title: 'Delete Subscription?',
+            text: 'This will remove the subscription record. The user will be able to request a new plan.',
+            type: 'warning',
+            showCancel: true,
+            confirmText: 'Yes, Delete'
         }).then(confirmed => {
             if(confirmed) {
                 document.getElementById(formId).submit();
