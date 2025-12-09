@@ -197,12 +197,15 @@
                     let x = 0, z = 0, rY = 0, zIndex = 0, opacity = 1;
                     
                     if (norm < frontCount) {
-                        // FRONT
+                        // FRONT LINEAR
                         x = leftLimit + (norm * gap);
-                        z = 0; rY = 0; zIndex = 100; opacity = 1;
+                        z = 0; rY = 0; 
+                        // Fix: Lower norm (earlier in sequence) should be on top if they overlap (mobile)
+                        zIndex = 100 - Math.floor(norm); 
+                        opacity = 1;
                     } 
                     else if (norm >= frontCount && norm < frontCount + 0.5) {
-                        // RIGHT FLIP
+                        // RIGHT END FLIP
                         let t = (norm - frontCount) / 0.5;
                         x = leftLimit + ((frontCount-1) * gap) + (t * 50); 
                         z = -200 * t;
@@ -222,7 +225,7 @@
                         z = -200; rY = 180; zIndex = 0; opacity = 0.8;
                     }
                     else {
-                        // LEFT FLIP
+                        // LEFT END FLIP
                         let t = (norm - (count - 0.5)) / 0.5;
                         x = (leftLimit - 50) + (t * 50);
                         z = -200 * (1-t);
@@ -240,11 +243,23 @@
                         while(pos < 0) pos += count;
                         while(pos >= count) pos -= count;
                         
-                        cell.style.transform = getTransform(pos);
+                        // Z-Index is now handled in getTransform for the transform style, 
+                        // but we need to apply it to cell.style.zIndex
+                        // We extract it from our logic or just calculate it again here? 
+                        // Since getTransform returns string, we can't easily extract.
+                        // Better to move logic out or just hack it:
+                        // Actually, I'll allow the logic inside getTransform to set it by returning an object? 
+                        // No, let's just copy the logic briefly.
                         
-                        // Z-index fix
-                        let z = parseFloat(cell.style.transform.match(/translateZ\((-?\d+)/)?.[1] || 0);
-                        cell.style.zIndex = z > -50 ? 100 : 10;
+                        let norm = pos;
+                        let z = 0;
+                        if(norm < 4) z = 100 - Math.floor(norm);
+                        else if (norm >= 4 && norm < 4.5) z = 50;
+                        else if (norm >= 4.5 && norm < count - 0.5) z = 0;
+                        else z = 50;
+
+                        cell.style.transform = getTransform(pos);
+                        cell.style.zIndex = z;
                     });
                     requestAnimationFrame(update);
                 }
@@ -252,19 +267,32 @@
 
                 // Drag Interaction
                 const scene = document.querySelector('.carousel-scene');
-                function handleStart(x) { isDragging = true; startDragX = x; startDragProgress = targetProgress; scene.style.cursor = 'grabbing'; }
-                function handleMove(x) { 
+                function handleStart(x) { 
+                    isDragging = true; 
+                    startDragX = x; 
+                    startDragProgress = targetProgress; 
+                    scene.style.cursor = 'grabbing'; 
+                }
+                
+                function handleMove(e, x) { 
                     if(!isDragging) return; 
                     const diff = x - startDragX; 
+                    // Prevent scroll if dragging horizontally
+                    if(Math.abs(diff) > 5 && e.cancelable) { 
+                        e.preventDefault(); 
+                    }
                     targetProgress = startDragProgress - (diff / 350); 
                 }
                 function handleEnd() { isDragging = false; scene.style.cursor = 'default'; targetProgress = Math.round(targetProgress); }
 
                 scene.addEventListener('mousedown', e => handleStart(e.pageX));
-                window.addEventListener('mousemove', e => handleMove(e.pageX));
+                window.addEventListener('mousemove', e => handleMove(e, e.pageX));
                 window.addEventListener('mouseup', handleEnd);
-                scene.addEventListener('touchstart', e => handleStart(e.touches[0].clientX));
-                window.addEventListener('touchmove', e => handleMove(e.touches[0].clientX));
+                
+                scene.addEventListener('touchstart', e => handleStart(e.touches[0].clientX), {passive: false}); // Non-passive to allow preventDefault? Chrome might complain. 
+                // Actually 'touchstart' is usually fine as passive, 'touchmove' needs to be non-passive to preventDefault.
+                
+                window.addEventListener('touchmove', e => handleMove(e, e.touches[0].clientX), {passive: false});
                 window.addEventListener('touchend', handleEnd);
             });
         </script>
