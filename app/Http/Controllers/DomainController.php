@@ -49,7 +49,7 @@ class DomainController extends Controller
             }
 
             // 1. Create Website (Owned by the new CP User)
-            $service->createWebsite($request->domain_name, 'Default', $userEmail, $cpUsername);
+            $service->createWebsite($request->domain_name, $userEmail, 'Default', $cpUsername);
             
             // 2. Create/Set FTP 
             // Since website is now owned by 'client_ID', FTP should technically be managed by them.
