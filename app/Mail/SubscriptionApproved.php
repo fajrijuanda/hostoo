@@ -15,13 +15,15 @@ class SubscriptionApproved extends Mailable
     use Queueable, SerializesModels;
 
     public $subscription;
+    public $credentials;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Subscription $subscription)
+    public function __construct(Subscription $subscription, $credentials = [])
     {
         $this->subscription = $subscription;
+        $this->credentials = $credentials;
     }
 
     /**

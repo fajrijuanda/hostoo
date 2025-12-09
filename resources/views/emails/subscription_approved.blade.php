@@ -120,6 +120,15 @@
             
             <p>Your account is now fully active. You can start managing your projects, databases, and emails right away.</p>
             
+            @if(!empty($credentials) && isset($credentials['password']))
+            <div style="background-color: #f0f7ff; border: 1px solid #cce5ff; border-radius: 8px; padding: 15px; margin: 20px 0; text-align: left;">
+                <h3 style="color: #004085; font-size: 16px; margin-top: 0; margin-bottom: 10px;">Your Hosting Control Panel Credentials:</h3>
+                <p style="color: #004085; font-size: 14px; margin: 5px 0;"><strong>Username:</strong> {{ $credentials['username'] }}</p>
+                <p style="color: #004085; font-size: 14px; margin: 5px 0;"><strong>Password:</strong> <code style="background: #fff; padding: 2px 5px; border-radius: 3px; font-family: monospace;">{{ $credentials['password'] }}</code></p>
+                <p style="color: #004085; font-size: 12px; margin: 10px 0 0 0;"><em>Please keep these safe! You will need them to manage your hosting features.</em></p>
+            </div>
+            @endif
+            
             <a href="{{ route('dashboard') }}" class="btn">Go to Dashboard</a>
             
             <p style="margin-bottom: 0;">Best regards,<br>

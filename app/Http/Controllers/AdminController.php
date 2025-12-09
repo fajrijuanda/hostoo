@@ -9,6 +9,13 @@ use Carbon\Carbon;
 
 class AdminController extends Controller
 {
+    protected $cyberPanel;
+
+    public function __construct(\App\Services\CyberPanelService $cyberPanel)
+    {
+        $this->cyberPanel = $cyberPanel;
+    }
+
     public function index()
     {
         // 1. Total Users (Strict 'user' role)
@@ -109,9 +116,38 @@ class AdminController extends Controller
         $user->storage_limit = $storageLimit;
         $user->save();
 
-        // Send Approval Email
+        // --- Create CyberPanel User ---
+        // Generate a username from email (take part before @, sanitize)
+        $username = strtolower(explode('@', $user->email)[0]);
+        $username = preg_replace('/[^a-z0-9]/', '', $username);
+        // Ensure username is not too short or taken? For now simple logic.
+        if(strlen($username) < 3) $username .= rand(100, 999);
+        
+        // Generate random password
+        $password = \Illuminate\Support\Str::random(12);
+
         try {
-            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\SubscriptionApproved($subscription));
+            // Call CyberPanel Service
+            $this->cyberPanel->createCyberPanelUser(
+                $user->name,
+                $username,
+                $user->email,
+                $password
+            );
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("CyberPanel User Creation Failed for {$user->email}: " . $e->getMessage());
+            // Proceed anyway? Or allow admin to retry?
+            // For now, proceed but log it.
+        }
+
+        // Send Approval Email with Credentials
+        $credentials = [
+            'username' => $username,
+            'password' => $password
+        ];
+
+        try {
+            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\SubscriptionApproved($subscription, $credentials));
         } catch (\Exception $e) {
             // Log error or ignore if mail fails to avoid blocking the request
             \Illuminate\Support\Facades\Log::error('Failed to send subscription email: ' . $e->getMessage());
