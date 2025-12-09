@@ -128,8 +128,9 @@ class AuthController extends Controller
                     'email' => $socialUser->getEmail(),
                     'google_id' => $socialUser->getId(),
                     'role' => 'user',
-                    'password' => null, // No password for social login
-                    'email_verified_at' => Carbon::now() // Auto-verify Google users
+                    // Generate random secure password instead of null to prevent issues
+                    'password' => Hash::make(\Illuminate\Support\Str::random(16)), 
+                    'email_verified_at' => Carbon::now(),
                 ]);
             } else {
                 // Update google_id if existing and ensure email is verified
@@ -159,7 +160,8 @@ class AuthController extends Controller
             return redirect()->intended('/dashboard');
 
         } catch (\Exception $e) {
-            return redirect('/login')->withErrors(['email' => 'Google Login Failed: ' . $e->getMessage()]);
+            \Illuminate\Support\Facades\Log::error('Google Login Error: ' . $e->getMessage() . ' | Trace: ' . $e->getTraceAsString());
+            return redirect('/login')->withErrors(['email' => 'Google Login Failed. Please try again or user standard login. (' . substr($e->getMessage(), 0, 50) . '...)']);
         }
     }
 }
