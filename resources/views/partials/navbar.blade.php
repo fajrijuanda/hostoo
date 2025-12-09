@@ -89,7 +89,11 @@
                 </div>
             </div>
         @else
-            <a href="{{ route('login') }}" class="btn-auth" style="border:none; background: var(--primary); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: 600;">Login</a>
+            @if(request()->routeIs('login'))
+                <a href="{{ route('register') }}" class="btn-auth" style="border:none; background: var(--primary); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: 600;">Register</a>
+            @else
+                <a href="{{ route('login') }}" class="btn-auth" style="border:none; background: var(--primary); color: white; padding: 10px 25px; border-radius: 50px; text-decoration: none; font-weight: 600;">Login</a>
+            @endif
         @endauth
 
             <!-- Mobile Menu Toggle -->
