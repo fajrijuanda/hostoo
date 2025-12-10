@@ -82,7 +82,7 @@
                 <div class="carousel-cell" style="position: absolute; width: 320px; height: 660px; left: 50%; top: 50%; margin-left: -160px; margin-top: -330px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <!-- Original Plan Card Structure -->
                     <div class="plan-card" style="width: 100%; height: 100%; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; backface-visibility: hidden;">
-                        <div class="plan-image" style="height: 220px; width: calc(100% - 3rem); margin: 1.5rem; border-radius: 8px; background: url('{{ asset('storage/plans/' . $plan->image) }}'); background-size: cover; background-repeat: no-repeat; background-position: center; flex-shrink: 0;"></div>
+                        <div class="plan-image" style="height: 220px; width: calc(100% - 3rem); margin: 1.5rem; border-radius: 8px; background: url('{{ asset('public/storage/plans/' . $plan->image) }}'); background-size: cover; background-repeat: no-repeat; background-position: center; flex-shrink: 0;"></div>
                         <div class="plan-content" style="padding: 0 1.5rem 6rem 1.5rem; flex: 1; display: flex; flex-direction: column;">
                             <div class="plan-price" style="margin-bottom: 1rem;">
                                 <span style="display: block; font-size: 1.1rem; color: #5e6282; margin-bottom: 0.5rem; font-weight: 600;">{{ $plan->name }}</span>

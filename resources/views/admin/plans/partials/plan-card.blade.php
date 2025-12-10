@@ -1,7 +1,7 @@
 <div class="plan-card" style="background: white; border-radius: 25px; overflow: hidden; width: 300px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); transition: 0.3s; text-align: center; padding-bottom: 2rem; position: relative;">
     
     <!-- Plan Image with Action Buttons Overlay -->
-    <div class="plan-image" style="height: 250px; width: calc(100% - 3rem); margin: 1.5rem; border-radius: 8px; object-fit: cover; background: url('{{ asset('storage/plans/' . $plan->image) }}'); background-size: cover; background-position: center; position: relative; flex-shrink: 0;">
+    <div class="plan-image" style="height: 250px; width: calc(100% - 3rem); margin: 1.5rem; border-radius: 8px; object-fit: cover; background: url('{{ asset('public/storage/plans/' . $plan->image) }}'); background-size: cover; background-position: center; position: relative; flex-shrink: 0;">
         
         <!-- Action Buttons Overlay -->
         <div style="position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; z-index: 10;">

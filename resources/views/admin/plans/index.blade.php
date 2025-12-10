@@ -30,7 +30,7 @@
                     <!-- Card Content -->
                     <div class="plan-card" style="background: white; border-radius: 25px; overflow: hidden; width: 100%; height: 100%; box-shadow: 0 5px 15px rgba(0,0,0,0.1); position: relative; backface-visibility: hidden; display: flex; flex-direction: column;">
                          <!-- Plan Image -->
-                        <div class="plan-image" style="height: 200px; width: calc(100% - 3rem); margin: 1.5rem; border-radius: 8px; background: url('{{ asset('storage/plans/' . $plan->image) }}') center/cover; position: relative; flex-shrink: 0;">
+                        <div class="plan-image" style="height: 200px; width: calc(100% - 3rem); margin: 1.5rem; border-radius: 8px; background: url('{{ asset('public/storage/plans/' . $plan->image) }}') center/cover; position: relative; flex-shrink: 0;">
                              <div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 5px; z-index: 10;">
                                 <button onclick="openEditModal({{ json_encode($plan) }})" style="background: rgba(255,255,255,0.9); border:none; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--primary);">
                                     <i class="fas fa-edit"></i>
