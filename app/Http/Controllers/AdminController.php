@@ -18,8 +18,12 @@ class AdminController extends Controller
 
     public function index()
     {
-        // 1. Total Users (Strict 'user' role)
-        $totalUsers = User::where('role', 'user')->count();
+        // 1. Total Users (Strict 'user' role) with Active Subscriptions
+        $totalUsers = User::where('role', 'user')
+            ->whereHas('subscriptions', function ($query) {
+                $query->where('status', 'active');
+            })
+            ->count();
         
         // Growth: New Users Today vs Yesterday
         $newUsersToday = User::where('role', 'user')->whereDate('created_at', Carbon::today())->count();
