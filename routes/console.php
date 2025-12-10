@@ -10,3 +10,6 @@ Artisan::command('inspire', function () {
 // Schedule Subscription Reminder
 use Illuminate\Support\Facades\Schedule;
 Schedule::command('subscription:send-expiry-reminders')->daily();
+
+// Check for Expired Subscriptions
+Schedule::command('subscription:check-expired')->daily();

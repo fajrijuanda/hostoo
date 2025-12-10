@@ -197,4 +197,36 @@ class CyberPanelService
 
         return $response->json();
     }
+
+    public function deleteWebsite($domainName)
+    {
+        // Endpoint: /api/deleteWebsite
+        $endpoint = rtrim($this->url, '/') . '/api/deleteWebsite';
+
+        $response = Http::withoutVerifying()->post($endpoint, [
+            'adminUser' => $this->adminUsername,
+            'adminPass' => $this->adminPassword,
+            'domainName' => $domainName,
+        ]);
+
+        Log::info("CyberPanel Delete Website [$domainName]: " . $response->body());
+
+        return $response->json();
+    }
+
+    public function deleteCyberPanelUser($username)
+    {
+        // Endpoint: /api/deleteUser
+        $endpoint = rtrim($this->url, '/') . '/api/deleteUser';
+
+        $response = Http::withoutVerifying()->post($endpoint, [
+            'adminUser' => $this->adminUsername,
+            'adminPass' => $this->adminPassword,
+            'userName' => $username, // CyberPanel usually expects 'userName' for deletion
+        ]);
+
+        Log::info("CyberPanel Delete User [$username]: " . $response->body());
+
+        return $response->json();
+    }
 }
