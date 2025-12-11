@@ -265,5 +265,21 @@
             }
         });
     }
+
+    @if(session('remote_redirect'))
+        // Wait for page load
+        document.addEventListener('DOMContentLoaded', function() {
+            Hostoo.alert({
+                title: 'Manual Action Required',
+                text: "{{ session('remote_redirect_message') }}",
+                type: 'info',
+                confirmText: 'OK, Open CyberPanel'
+            }).then(confirmed => {
+                if (confirmed) {
+                    window.location.href = "{{ session('remote_redirect') }}";
+                }
+            });
+        });
+    @endif
 </script>
 @endsection

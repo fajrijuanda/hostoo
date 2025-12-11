@@ -19,7 +19,7 @@ class DomainController extends Controller
         ]);
 
         // Create Website on CyberPanel
-        $service = new \App\Services\CyberPanelService();
+        $service = app(\App\Services\CyberPanelService::class);
         
         // Random FTP Password
         $ftpPassword = \Illuminate\Support\Str::random(16);
@@ -49,13 +49,54 @@ class DomainController extends Controller
             }
 
             // 1. Create Website (Owned by the new CP User)
-            $service->createWebsite($request->domain_name, $userEmail, 'Default', $cpUsername);
+            // Determine Package from User's Subscription
+            // Assuming one active subscription or taking the first one
+            $user = \Illuminate\Support\Facades\Auth::user();
+            $subscription = $user->subscriptions()->where('status', 'active')->first();
+            
+            $packageName = 'Default';
+            if ($subscription) {
+                 $packageName = preg_replace('/[^a-zA-Z0-9_\-]/', '', $subscription->plan_type);
+                 if(empty($packageName)) $packageName = 'Default';
+            }
+            
+            // --- NEW: CREATE PACKAGE FIRST (As per User Flow) ---
+            // Using stored CP Password
+            if ($user->cp_password) {
+                try {
+                     $service->createPackage(
+                     $service->createPackage(
+                        $packageName, 
+                        10000, 
+                        0, 
+                        3, 
+                        1, 
+                        100, 
+                        1,
+                        ['username' => $cpUsername, 'password' => $user->cp_password]
+                     );
+                } catch (\Exception $pkgEx) {
+                    \Illuminate\Support\Facades\Log::warning("CyberPanel Package Creation Failed in DomainController: " . $pkgEx->getMessage());
+                }
+            } else {
+                 \Illuminate\Support\Facades\Log::warning("No CP Password found for user {$user->id}, skipping Package Creation.");
+            }
+            
+            $service->createWebsite($request->domain_name, $userEmail, $packageName, $cpUsername);
             
             // 2. Create/Set FTP 
             // Since website is now owned by 'client_ID', FTP should technically be managed by them.
             // But 'admin' can usually create FTP for any site.
             // We continue creating a dedicated FTP account.
-            $service->createFtpAccount($request->domain_name, $ftpUsername, $ftpPassword);
+            $service->createFtpAccount($request->domain_name, $ftpUsername, $ftpPassword, $cpUsername);
+
+            // 3. Create NameServer (Auto-assign IP from Server)
+            $serverIp = parse_url(config('services.cyberpanel.url'), PHP_URL_HOST);
+            $ns1 = 'ns1.' . $request->domain_name;
+            $ns2 = 'ns2.' . $request->domain_name;
+            
+            // Call API to create nameservers
+            $service->createNameServer($request->domain_name, $ns1, $ns2, $serverIp); // Using same IP for both for now, typical for single CP instance
 
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error("CyberPanel Error: " . $e->getMessage());

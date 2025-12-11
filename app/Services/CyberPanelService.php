@@ -45,7 +45,7 @@ class CyberPanelService
 
     public function createWebsite($domainName, $ownerEmail, $package = 'Default', $ownerName = 'admin')
     {
-        // Endpoint: /api/createWebsite
+        // Endpoint: /api/createWebsite/
         $endpoint = rtrim($this->url, '/') . '/api/createWebsite';
 
         // CyberPanel API typically requires these fields.
@@ -58,20 +58,20 @@ class CyberPanelService
             'adminEmail' => $ownerEmail, // 'adminEmail' is often used as the owner email in the API docs
             'phpSelection' => 'PHP 8.2',
             'websiteOwner' => $ownerName, 
-            'acl' => 'user', // Default ACL
+            'acl' => 'Customer', // Default ACL
             'dkimCheck' => 1, // Enable DKIM
             'openBasedir' => 1, // Enable OpenBasedir protection
             'createDNS' => 1, // Ensure DNS Zone is created
         ]);
 
-        Log::info("CyberPanel Create Website [$domainName]: " . $response->body());
+        Log::info("CyberPanel Create Website [$domainName]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
 
      public function createCyberPanelUser($name, $username, $email, $password)
     {
-         // Endpoint: /api/submitUserCreation
+         // Endpoint: /api/submitUserCreation/
          $endpoint = rtrim($this->url, '/') . '/api/submitUserCreation';
 
          // Split Name for First/Last
@@ -95,42 +95,44 @@ class CyberPanelService
             'email' => $email,
             'userName' => $username,
             'password' => $password,
-            'acl' => 'user',
+            'acl' => 'Customer',
             'websitesLimit' => 10, // Global limit for this user
-            'selectedACL' => 'user'
+            'selectedACL' => 'Customer',
+            'securityLevel' => 'HIGH',
          ]);
          
-         Log::info("CyberPanel Create User [$username]: " . $response->body());
+         Log::info("CyberPanel Create User [$username]: Status: " . $response->status() . " Body: " . $response->body());
          return $response->json();
     }
 
-    public function createFtpAccount($domainName, $username, $password)
+    public function createFtpAccount($domainName, $username, $password, $ownerName = null)
     {
-        // Endpoint: /api/createFTPAccount
+        // Endpoint: /api/createFTPAccount/
         // Note: CyberPanel API docs say 'createFTPAccount'
         $endpoint = rtrim($this->url, '/') . '/api/createFTPAccount';
 
-        $response = Http::withoutVerifying()->post($endpoint, [
+        $data = [
             'adminUser' => $this->adminUsername,
             'adminPass' => $this->adminPassword,
             'domainName' => $domainName,
             'userName' => $username,
             'password' => $password,
-            // 'ownerName' => 'admin' // If website is owned by user, FTP should probably default to that? 
-            // Usually FTP is created under the website owner automatically or we specify.
-            // API Doc: ownerName is required? Let's keep it optional/admin if needed, but if website is owned by client, 
-            // admin might still be able to create it. 
-            // Safest: Don't change this yet unless broken.
-        ]);
+        ];
 
-        Log::info("CyberPanel Create FTP [$username]: " . $response->body());
+        if ($ownerName) {
+            $data['ownerName'] = $ownerName;
+        }
+
+        $response = Http::withoutVerifying()->post($endpoint, $data);
+
+        Log::info("CyberPanel Create FTP [$username]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
     
     public function createDatabase($websiteName, $dbName, $dbUser, $dbPass)
     {
-        // Endpoint: /api/createDatabase
+        // Endpoint: /api/createDatabase/
         $endpoint = rtrim($this->url, '/') . '/api/createDatabase';
 
         $response = Http::withoutVerifying()->post($endpoint, [
@@ -142,14 +144,14 @@ class CyberPanelService
             'dbPassword' => $dbPass,
         ]);
 
-        Log::info("CyberPanel Create Database [$dbName] on [$websiteName]: " . $response->body());
+        Log::info("CyberPanel Create Database [$dbName] on [$websiteName]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
 
     public function deleteDatabase($dbName)
     {
-        // Endpoint: /api/deleteDatabase
+        // Endpoint: /api/deleteDatabase/
         $endpoint = rtrim($this->url, '/') . '/api/deleteDatabase';
 
         $response = Http::withoutVerifying()->post($endpoint, [
@@ -158,14 +160,14 @@ class CyberPanelService
             'dbName' => $dbName,
         ]);
 
-        Log::info("CyberPanel Delete Database [$dbName]: " . $response->body());
+        Log::info("CyberPanel Delete Database [$dbName]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
 
     public function createEmail($websiteName, $username, $password)
     {
-        // Endpoint: /api/createEmail
+        // Endpoint: /api/createEmail/
         $endpoint = rtrim($this->url, '/') . '/api/createEmail';
 
         $response = Http::withoutVerifying()->post($endpoint, [
@@ -176,14 +178,14 @@ class CyberPanelService
             'password' => $password,
         ]);
 
-        Log::info("CyberPanel Create Email [$username] on [$websiteName]: " . $response->body());
+        Log::info("CyberPanel Create Email [$username] on [$websiteName]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
 
     public function deleteEmail($websiteName, $email)
     {
-        // Endpoint: /api/deleteEmail
+        // Endpoint: /api/deleteEmail/
         $endpoint = rtrim($this->url, '/') . '/api/deleteEmail';
 
         $response = Http::withoutVerifying()->post($endpoint, [
@@ -193,14 +195,14 @@ class CyberPanelService
             'email' => $email,
         ]);
 
-        Log::info("CyberPanel Delete Email [$email] on [$websiteName]: " . $response->body());
+        Log::info("CyberPanel Delete Email [$email] on [$websiteName]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
 
     public function deleteWebsite($domainName)
     {
-        // Endpoint: /api/deleteWebsite
+        // Endpoint: /api/deleteWebsite/
         $endpoint = rtrim($this->url, '/') . '/api/deleteWebsite';
 
         $response = Http::withoutVerifying()->post($endpoint, [
@@ -209,24 +211,84 @@ class CyberPanelService
             'domainName' => $domainName,
         ]);
 
-        Log::info("CyberPanel Delete Website [$domainName]: " . $response->body());
+        Log::info("CyberPanel Delete Website [$domainName]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
     }
 
     public function deleteCyberPanelUser($username)
     {
-        // Endpoint: /api/deleteUser
-        $endpoint = rtrim($this->url, '/') . '/api/deleteUser';
+        // Endpoint: /api/submitUserDeletion
+        $endpoint = rtrim($this->url, '/') . '/api/submitUserDeletion';
 
         $response = Http::withoutVerifying()->post($endpoint, [
             'adminUser' => $this->adminUsername,
             'adminPass' => $this->adminPassword,
-            'userName' => $username, // CyberPanel usually expects 'userName' for deletion
+            'accountUsername' => $username, // Changed from 'userName' based on error message
         ]);
 
-        Log::info("CyberPanel Delete User [$username]: " . $response->body());
+        Log::info("CyberPanel Delete User [$username]: Status: " . $response->status() . " Body: " . $response->body());
 
         return $response->json();
+    }
+
+    public function createNameServer($domainName, $ns1, $ns2, $ip)
+    {
+        // Endpoint: /api/createNameServer
+        $endpoint = rtrim($this->url, '/') . '/api/createNameServer';
+
+        $response = Http::withoutVerifying()->post($endpoint, [
+            'adminUser' => $this->adminUsername,
+            'adminPass' => $this->adminPassword,
+            'domainName' => $domainName,
+            'firstNameserver' => $ns1,
+            'firstNsIp' => $ip,
+            'secondNameserver' => $ns2,
+            'secondNsIp' => $ip,
+        ]);
+
+        Log::info("CyberPanel Create NameServer [$domainName]: Status: " . $response->status() . " Body: " . $response->body());
+
+        return $response->json();
+    }
+
+    public function createPackage($packageName, $diskSpace, $bandwidth, $ftpAccounts, $databases, $emails, $domains, $creds = [])
+    {
+        // Endpoint: /api/createPackage (Common convention, previous guess packages/createPackage was 404)
+        $endpoint = rtrim($this->url, '/') . '/api/createPackage';
+
+        $adminUser = $creds['username'] ?? $this->adminUsername;
+        $adminPass = $creds['password'] ?? $this->adminPassword;
+
+        $response = Http::withoutVerifying()->post($endpoint, [
+            'adminUser' => $adminUser,
+            'adminPass' => $adminPass,
+            'packageName' => $packageName,
+            'diskSpace' => $diskSpace,
+            'bandwidth' => $bandwidth,
+            'ftpAccounts' => $ftpAccounts,
+            'dataBases' => $databases,
+            'emailAccounts' => $emails,
+            'allowedDomains' => $domains,
+            'api' => 1,
+        ]);
+
+        Log::info("CyberPanel Create Package [$packageName] by [$adminUser]: Status: " . $response->status() . " Body: " . $response->body());
+
+        return $response->json();
+    }
+
+    public function enableApiAccess($username)
+    {
+         // NOTE: There is no known public API endpoint to enable API access for a user.
+         // It is typically done via UI: Users -> API Access.
+         // We will NOT call a failing endpoint. We will log a warning and assume the admin will do it manually 
+         // OR the user already has it.
+         
+         Log::warning("CyberPanel: API Access for user [$username] must be enabled MANUALLY via CyberPanel Dashboard. No API endpoint available.");
+         
+         // Return a mock success structure so the flow doesn't crash, 
+         // but alert the user in the logs/UI if possible.
+         return ['status' => 1, 'message' => 'Manual Action Required: Enable API Access in CyberPanel UI'];
     }
 }

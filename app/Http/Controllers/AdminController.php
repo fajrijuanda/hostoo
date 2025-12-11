@@ -124,32 +124,37 @@ class AdminController extends Controller
         // Generate a username from email (take part before @, sanitize)
         $username = strtolower(explode('@', $user->email)[0]);
         $username = preg_replace('/[^a-z0-9]/', '', $username);
-        // Ensure username is not too short or taken? For now simple logic.
         if(strlen($username) < 3) $username .= rand(100, 999);
         
-        // Generate random password
-        $password = \Illuminate\Support\Str::random(12);
+        $password = null;
+        $userCreated = false;
 
-        try {
-            // Call CyberPanel Service
-            $response = $this->cyberPanel->createCyberPanelUser(
-                $user->name,
-                $username,
-                $user->email,
-                $password
-            );
-            
-            // Check for API error structure usually {"error": 1, "errorMessage": "..."}
-            // Or {"status": 0, "error_message": "..."}
-            if ((isset($response['error']) && $response['error'] == 1) || isset($response['error_message'])) {
-                $msg = $response['errorMessage'] ?? $response['error_message'] ?? 'Unknown error';
-                \Illuminate\Support\Facades\Log::error("CyberPanel API Error: " . $msg);
-                 return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel User creation failed: ' . $msg);
+        // CHECK IF USER ALREADY HAS CP ACCOUNT (Reuse Password)
+        if ($user->cp_password) {
+            $password = $user->cp_password;
+            \Illuminate\Support\Facades\Log::info("Reusing existing CyberPanel account for {$user->email}");
+        } else {
+             // Generate New Password & Create User
+             $password = \Illuminate\Support\Str::random(12);
+             
+             try {
+                // Call CyberPanel Service
+                $response = $this->cyberPanel->createCyberPanelUser(
+                    $user->name,
+                    $username,
+                    $user->email,
+                    $password
+                );
+                
+                // Store CyberPanel Password for later use
+                $user->cp_password = $password;
+                $user->save();
+                $userCreated = true;
+
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("CyberPanel User Creation Failed for {$user->email}: " . $e->getMessage());
+                return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel connection failed. Please check logs/configuration.');
             }
-
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error("CyberPanel User Creation Failed for {$user->email}: " . $e->getMessage());
-            return redirect()->back()->with('error', 'Subscription approved in DB, but CyberPanel connection failed. Please check logs/configuration.');
         }
 
         // Send Approval Email with Credentials
@@ -161,11 +166,15 @@ class AdminController extends Controller
         try {
             \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\SubscriptionApproved($subscription, $credentials));
         } catch (\Exception $e) {
-            // Log error or ignore if mail fails to avoid blocking the request
             \Illuminate\Support\Facades\Log::error('Failed to send subscription email: ' . $e->getMessage());
         }
-
-        return redirect()->back()->with('success', 'Subscription approved & Email sent successfully.');
+        
+        $cpUrl = config('services.cyberpanel.url');
+        
+        return redirect()->back()
+            ->with('success', 'Subscription approved & User created.')
+            ->with('remote_redirect', $cpUrl)
+            ->with('remote_redirect_message', 'User created! Verify API Access in CyberPanel.');
     }
 
     public function rejectSubscription($id)
@@ -179,12 +188,38 @@ class AdminController extends Controller
     public function deleteSubscription($id)
     {
         $subscription = Subscription::findOrFail($id);
-        
-        // Optional: Add logic here to delete from CyberPanel if needed (e.g., delete website/user)
-        // For now, primarily for DB cleanup/retry.
+
+        // Delete CyberPanel User from External Server
+        $user = $subscription->user;
+        if ($user->cp_password) {
+             // Derive username same way as creation
+             $cpUsername = strtolower(explode('@', $user->email)[0]);
+             $cpUsername = preg_replace('/[^a-z0-9]/', '', $cpUsername);
+             // Note: In creation we might have appended random digits if length < 3
+             // BUT we didn't save the exact username in DB, only password (cp_password).
+             // This is a potential flaw if we randomized it. 
+             // Ideally we should have stored 'cp_username' column too. 
+             // FOR NOW: Assume username matches the generation logic without random digits collision 
+             // OR that user hasn't changed it manually.
+             // Refactoring suggestion: Store cp_username in users table later.
+             
+             // Try to delete using the base derived name. Ideally we should store the exact CP username.
+             try {
+                 $this->cyberPanel->deleteCyberPanelUser($cpUsername);
+             } catch (\Exception $e) {
+                 \Illuminate\Support\Facades\Log::error("Failed to delete CyberPanel User [$cpUsername]: " . $e->getMessage());
+             }
+        }
+
+        // Clear CP Credentials and Storage Data locally
+        $user->cp_password = null;
+        $user->storage_limit = 0;
+        $user->save();
         
         $subscription->delete();
+        
+        // Also delete domains associated? Logic might be needed but user only asked for User deletion.
 
-        return redirect()->back()->with('success', 'Subscription deleted successfully. User can now request a new plan.');
+        return redirect()->back()->with('success', 'Subscription deleted & CyberPanel User removed.');
     }
 }

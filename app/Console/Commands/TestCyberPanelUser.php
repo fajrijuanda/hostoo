@@ -19,48 +19,20 @@ class TestCyberPanelUser extends Command
         $password = 'Password123!';
         $name = 'Test User';
 
-        $this->info("Attempting to create user: $username");
-        
-        // Manual call to debug raw response
-        $url = config('services.cyberpanel.url');
-        $endpoint = rtrim($url, '/') . '/api/submitUserCreation';
-        $this->info("Endpoint: $endpoint");
+        $this->info("1. Attempting to create user: $username using Service");
+        $result = $service->createCyberPanelUser($name, $username, $email, $password);
+        $this->info("Result: " . json_encode($result, JSON_PRETTY_PRINT));
 
-        $response = Http::withoutVerifying()->post($endpoint, [
-            'adminUser' => config('services.cyberpanel.username'),
-            'adminPass' => config('services.cyberpanel.password'),
-            'firstName' => $name,
-            'lastName' => '.',
-            'email' => $email,
-            'userName' => $username,
-            'password' => $password,
-            'acl' => 'user',
-            'websitesLimit' => 1,
-            'selectedACL' => 'user'
-        ]);
-
-        $this->info("Status: " . $response->status());
-        $this->info("Body: " . $response->body());
-        
-        // Also try the other common endpoint if that failed
-        if ($response->status() != 200 || strpos($response->body(), 'error') !== false) {
-             $endpoint2 = rtrim($url, '/') . '/api/createUsers';
-             $this->info("--- Retrying with /api/createUsers ---");
-             $this->info("Endpoint: $endpoint2");
-             $response2 = Http::withoutVerifying()->post($endpoint2, [
-                'adminUser' => config('services.cyberpanel.username'),
-                'adminPass' => config('services.cyberpanel.password'),
-                'firstName' => $name,
-                'lastName' => '.',
-                'email' => $email,
-                'userName' => $username,
-                'password' => $password,
-                'acl' => 'user',
-                'websitesLimit' => 1,
-                'selectedACL' => 'user'
-            ]);
-            $this->info("Status: " . $response2->status());
-            $this->info("Body: " . $response2->body());
+        if (isset($result['status']) && $result['status'] == 1) {
+            $this->info("2. Attempting to Enable API Access for: $username");
+            $apiResult = $service->enableApiAccess($username);
+            $this->info("Result: " . json_encode($apiResult, JSON_PRETTY_PRINT));
         }
+
+        $packageName = 'test-pkg-' . rand(100,999);
+        $this->info("3. Attempting to Create Package: $packageName");
+        // Package Specs: 1GB, 0 BW, 1 FTP, 1 DB, 1 Email, 1 Domain
+        $pkgResult = $service->createPackage($packageName, 1000, 0, 1, 1, 1, 1);
+        $this->info("Result: " . json_encode($pkgResult, JSON_PRETTY_PRINT));
     }
 }
