@@ -74,7 +74,8 @@ class DomainController extends Controller
                         100, 
                         1,
                         ['username' => $cpUsername, 'password' => $user->cp_password]
-                     );
+                      ) 
+                    );
                 } catch (\Exception $pkgEx) {
                     \Illuminate\Support\Facades\Log::warning("CyberPanel Package Creation Failed in DomainController: " . $pkgEx->getMessage());
                 }
