@@ -65,7 +65,6 @@ class DomainController extends Controller
             if ($user->cp_password) {
                 try {
                      $service->createPackage(
-                     $service->createPackage(
                         $packageName, 
                         10000, 
                         0, 
@@ -74,8 +73,7 @@ class DomainController extends Controller
                         100, 
                         1,
                         ['username' => $cpUsername, 'password' => $user->cp_password]
-                      ) 
-                    );
+                     );
                 } catch (\Exception $pkgEx) {
                     \Illuminate\Support\Facades\Log::warning("CyberPanel Package Creation Failed in DomainController: " . $pkgEx->getMessage());
                 }
